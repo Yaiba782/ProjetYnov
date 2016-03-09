@@ -45,5 +45,12 @@ process.on('SIGTERM', function () {
 
 require('./user');
 
+/*
+db.Users.save({
+    email : "alexandze@gmail.com",
+    username : "alexandze",
+    pas
+})
+*/
 
 
