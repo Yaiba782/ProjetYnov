@@ -1,10 +1,14 @@
 /**
  * Created by alex on 08/03/16.
  */
+    var process = require('../../production');
 var mongoose = require('mongoose');
 var dbURI = 'mongodb://localhost/BaseData';
-mongoose.connect(dbURI);
 
+if(process.env.NODE_ENV === 'production'){
+    dbURI =  process.env.MONGOLAB_URI;
+}
+mongoose.connect(dbURI);
 //event
 mongoose.connection.on('connected', function () {
    console.log('Mongoose connected to ' + dbURI);
