@@ -71,7 +71,8 @@ module.exports.register = function (req, res) {
     });
 };
 
-module.exports.login = function (res, req) {
+module.exports.login = function (req, res) {
+
     if(!req.body.username || !req.body.password){
         sendJsonResponse(res, 400, {
             "message" : "veuillez indiquer tout les champs necessaire"
