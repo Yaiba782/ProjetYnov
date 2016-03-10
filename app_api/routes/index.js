@@ -3,16 +3,22 @@
  */
 var express = require('express');
 var router = express.Router();
-var ctrlAthentication = require('../controllers/authentication');
+var jwt = require('express-jwt');
+var auth = jwt({
+    secret : process.env.JWT_SECRET,
+    userProperty : 'payload'
+});
+var ctrlAuthentication = require('../controllers/authentication');
+var ctrlUsers = require('../controllers/users');
 
-router.post('/register', ctrlAthentication.register);
-router.post('/login', ctrlAthentication.login);
-//  var ctrlUsers = require('../controllers/users');
+router.post('/register',  ctrlAuthentication.register);
+router.post('/login', ctrlAuthentication.login);
+//
 
-//router.get('/users', ctrlUsers.getAllUsers);
-//router.get('users/:userId', ctrlUsers.getOneUser);
-//router.post('/users', ctrlUsers.createUser);
-//router.put('/users', ctrlUsers.updateUser);
+router.get('/users', ctrlUsers.getAllUsers);
+router.get('/users/:userid/userid', ctrlUsers.getOneUserById);
+router.post('/users', ctrlUsers.updateUser);
+router.post('/test1', ctrlUsers.test);
 //router.delete('/users', ctrlUsers.deleteUser);
 
 module.exports = router;

@@ -9,16 +9,16 @@ var jwt = require('jsonwebtoken');
 var addressSchema = new mongoose.Schema({
     address : {
         type : String,
-        require : "veuillez saisir une adresse"
+        required: "veuillez saisir une adresse"
     },
     zipCode : {
         type : String,
         match : [/^[0-9]{5}$/, "Veuillez saisir un code postal valide"],
-        require : "veuillez saisir un code postal"
+        required: "veuillez saisir un code postal"
     },
     city : {
         type : String,
-        require : "veuillez saisir une ville"
+        required : "veuillez saisir une ville"
     }
 });
 mongoose.model('Address', addressSchema, 'Address');

@@ -17,6 +17,7 @@
     "debug": "~2.2.0",
     "dotenv": "^2.0.0",
     "express": "~4.13.1",
+    "express-jwt": "^3.3.0",
     "jade": "~1.11.0",
     "jasmine": "^2.4.1",
     "jsonwebtoken": "^5.7.0",
