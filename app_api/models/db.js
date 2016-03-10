@@ -1,7 +1,7 @@
 /**
  * Created by alex on 08/03/16.
  */
-    var process = require('../../production');
+
 var mongoose = require('mongoose');
 var dbURI = 'mongodb://localhost/BaseData';
 

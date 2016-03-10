@@ -4,6 +4,7 @@
 var mongoose = require('mongoose');
 var crypto = require('crypto');
 var BigNumber = require('bignumber.js');
+var jwt = require('jsonwebtoken');
 
 var addressSchema = new mongoose.Schema({
     address : {
@@ -62,16 +63,13 @@ var userSchema = new mongoose.Schema({
             message : "le username doit contenir minimum 3 caractère"
         }
     },
-    password:{
+    hash : {
+        type :String,
+        required : "veuillez indiquer un mot de passe"
+    },
+    salt : {
         type : String,
-        require : true,
-        unique : true,
-        validate : {
-            validator : function(password){
-                return password.length >=6
-            },
-            message : 'Le mot de passe doit contenir minimum 6 caractère'
-        }
+        required : "veuillez indiquer un mot de passe"
     },
     pointNumber : {
         type : Number,
@@ -91,7 +89,7 @@ var userSchema = new mongoose.Schema({
             },
             message : "vous devez être majeur"
         },
-        require : true
+        required : "veuillez indiquer une date de naissance"
     },
     address : [addressSchema],
 
@@ -116,17 +114,24 @@ var userSchema = new mongoose.Schema({
         "default" : Date.now
     }
 });
-userSchema.pre('save', function (next) {
-    if(this.password >=6){
-
-        this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
-
-        this.password = this.hashPassword(this.password);
-    }
-    next();
-});
-userSchema.methods.hashPassword = function(password) {
-    return crypto.pbkdf2Sync(password, this.salt, 10000, 64).toString('base64');
+userSchema.methods.validPassword = function(password){
+    var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+    return this.hash === hash;
+};
+userSchema.methods.setPassword = function(password){
+    this.salt = crypto.randomBytes(16).toString('hex');
+    this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+};
+userSchema.methods.generateJwt = function () {
+  var expiry = new Date();
+    //7 day for the token
+    expiry.setDate(expiry.getDate() + 7);
+    return jwt.sign({
+        _id : this._id,
+        email : this.email,
+        username : this.username,
+        exp : parseInt(expiry.getTime() / 1000)
+    }, process.env.JWT_SECRET);
 };
 
 mongoose.model('User', userSchema, 'Users');

@@ -3,9 +3,13 @@
  */
 var express = require('express');
 var router = express.Router();
-var ctrlUsers = require('../controllers/users');
+var ctrlAthentication = require('../controllers/authentication');
 
-router.get('/users', ctrlUsers.getAllUsers);
+router.post('/register', ctrlAthentication.register);
+router.post('/login', ctrlAthentication.login);
+//  var ctrlUsers = require('../controllers/users');
+
+//router.get('/users', ctrlUsers.getAllUsers);
 //router.get('users/:userId', ctrlUsers.getOneUser);
 //router.post('/users', ctrlUsers.createUser);
 //router.put('/users', ctrlUsers.updateUser);

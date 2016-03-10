@@ -7,6 +7,8 @@
      var User;
      var PhoneNumber;
      var BigNumber;
+
+
      beforeAll(function (done) {
          require('../bin/www');
          mongoose = require('mongoose');
@@ -174,3 +176,5 @@
          });
      });
  });
+
+

@@ -31,6 +31,7 @@ node_modules
 public/javascripts
 .idea
 production.js
+.env
 
 
 
