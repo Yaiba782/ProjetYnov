@@ -1512,7 +1512,7 @@ form#contact-form input[type="submit"] {
     background-color: rgba(0, 0, 0, 0);
     box-shadow: none;
     padding: 0px 20px 6px;
-    margin-top: -6px;
+    margin-top: 0 !important;
 }
 .card .content .main {
     min-height: 160px;
