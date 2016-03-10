@@ -1540,13 +1540,12 @@ form#contact-form input[type="submit"] {
 .card .footer {
     border-top: 1px solid #EEEEEE;
     color: #999999;
-    margin: 18px 0 0;
+    margin: 28px 0 0;
     padding: 4px 0 0;
     text-align: center;
 }
 .card .footer .social-links{
     font-size: 18px;
-    padding: 10px;
 }
 .card .footer .social-links a{
     margin: 0 7px;

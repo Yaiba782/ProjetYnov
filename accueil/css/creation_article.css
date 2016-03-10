@@ -1,0 +1,53 @@
+.formulaire {
+  width: 80%;
+  margin: auto;
+  margin-top:15px;
+}
+
+.section {
+  padding-top: 10px;
+}
+
+.descriptioncourte {
+  height:100px;
+  width:500px;
+}
+
+.descriptiondetaille {
+  height:250px;
+  width:500px;
+}
+
+.points {
+  max-width: 40px;
+  height:30px;
+}
+
+.haut {
+  display: block;
+}
+
+.bas {
+  display: block;
+}
+
+.divalignement {
+  width:20px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.hb {
+  margin-left: 21px;
+}
+
+.text {
+  width: 350px;
+  text-align: right;
+}
+
+.sub_button {
+  padding-top: 50px;
+  width: 35%;
+  margin: auto;
+}
