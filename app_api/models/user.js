@@ -46,15 +46,15 @@ var userSchema = new mongoose.Schema({
     },
     email: {
         type : String,
-        index : true,
+        unique : true,
         match:  [/.+\@.+\..+/, "Veuillez saisir une adresse email valide"],
         required : "veuillez saisir une adresse email",
-        unique : true
+
     },
     username: {
         type : String,
         trim : true,
-        unique : true,
+
         required : "Veuillez indiquez un nom d'utilisateur OBLIGATOIRE",
         validate : {
             validator : function (username) {
@@ -65,11 +65,11 @@ var userSchema = new mongoose.Schema({
     },
     hash : {
         type :String,
-        required : "veuillez indiquer un mot de passe"
+        required : "veuillez indiquer un mot de passe valide"
     },
     salt : {
         type : String,
-        required : "veuillez indiquer un mot de passe"
+        required : "veuillez indiquer un mot de passe valide"
     },
     pointNumber : {
         type : Number,
@@ -119,8 +119,10 @@ userSchema.methods.validPassword = function(password){
     return this.hash === hash;
 };
 userSchema.methods.setPassword = function(password){
-    this.salt = crypto.randomBytes(16).toString('hex');
-    this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+    if(password.length >=6){
+        this.salt = crypto.randomBytes(16).toString('hex');
+        this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+    }
 };
 userSchema.methods.generateJwt = function () {
   var expiry = new Date();
@@ -132,6 +134,31 @@ userSchema.methods.generateJwt = function () {
         username : this.username,
         exp : parseInt(expiry.getTime() / 1000)
     }, process.env.JWT_SECRET);
+};
+
+userSchema.methods.formattedDate = function (dateString) {
+    if(dateString.length == 0){
+        return "veuillez saisir une date";
+    }
+    if(dateString.length !== 10){
+        return "veuillez saisir un format de date correct";
+    }
+
+    var dateFormattedTab = dateString.split('/');
+
+    if(dateFormattedTab.length == 3) {
+        if (parseInt(dateFormattedTab[1]) < 13 && parseInt(dateFormattedTab[1]) > 0 &&
+            parseInt(dateFormattedTab[0]) > 0 && dateFormattedTab[0] < 32){
+            var day = parseInt(dateFormattedTab[0], 10);
+            var month = parseInt(dateFormattedTab[1], 10) - 1;
+            var year = parseInt(dateFormattedTab[2], 10);
+            var birthDate = new Date(year, month, day);
+            return birthDate.getTime();
+        }else {
+            return "veuillez saisir un format date correct";
+        }
+    }
+    return;
 };
 
 mongoose.model('User', userSchema, 'Users');
