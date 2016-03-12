@@ -20,7 +20,7 @@ describe('test routes', function () {
         it('should register a user', function (done) {
             var username = "alexgfbd";
             var password = "12345666668";
-            var email = "exemplssdqe@ynov.com";
+            var email = "alexandze@gmail.com";
             var birthDate = '14/01/1993';
            request(app)
                 .post('/api/register')
@@ -64,21 +64,20 @@ describe('test routes', function () {
                     });
             });
         });
-
-
     });
     describe('when I create the same user',function () {
         it('should give error', function (done) {
             var username = "alexgfbd";
-            var password = "12345666668";
-            var email = "exemplssdqe@ynov.com";
+            var password = "12345666csf668";
+            var email = "alexandze@gmail.com";
             var birthDate = '14/01/1993';
             request(app)
                 .post('/api/register')
                 .form({username : username, password : password, email : email, birthDate : birthDate})
-                .expect(200)
+
                 .end(function (err, res, body) {
-                    console.log(body);
+                    body = JSON.parse(body);
+                    expect(body.message).toBe("le username existe déjà veuillez saisir un autre username");
                     done();
                 });
         });
