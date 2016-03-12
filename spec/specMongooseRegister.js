@@ -5,17 +5,18 @@
  describe('test mongoose', function () {
      var mongoose;
      var User;
-     var PhoneNumber;
+
      var BigNumber;
      var Address;
+
 
 
      beforeAll(function (done) {
        require('../bin/www');
          mongoose = require('mongoose');
          User = mongoose.model('User');
-         PhoneNumber = mongoose.model('PhoneNumber');
-         Address = mongoose.model('Address');
+
+
          mongoose.connection.collections['Users'].drop( function(err) {
              done();
          });
@@ -38,6 +39,8 @@
              var password = "123456";
              var email = "exemple@ynov.com";
              var birthDate = '14/01/1993';
+
+
              var user = new User();
 
              user.username = username;
@@ -109,10 +112,10 @@
          });
          it('should give error because I give invalid mobil phone number ', function (done) {
 
-             var phoneNumber = new PhoneNumber({
+             var phoneNumber = {
                  fixNumber : "0151618960",
                  mobilNumber : "0451618960"
-             });
+             };
              var username = "alex";
              var password = "12345647";
              var email = "exemple@ynov.com";
@@ -132,10 +135,10 @@
          });
          it('should give error because I give invalid fix phone number ', function (done) {
 
-             var phoneNumber = new PhoneNumber({
+             var phoneNumber = {
                  fixNumber : "0751618960",
                  mobilNumber : "0651618960"
-             });
+             };
              var username = "alex";
              var password = "1234567";
              var email = "exemple@ynov.com";
@@ -201,15 +204,15 @@
              var address = '78 avenue crozatier';
              var zipCode = '75016';
              var city = 'paris';
-             var phoneNumber = new PhoneNumber({
+             var phoneNumber = {
                  fixNumber : "0151618960",
                  mobilNumber : "0651618960"
-             });
-             var addressSave = new Address({
+             };
+             var addressSave = {
                  address : address,
                  zipCode : zipCode,
                  city : city
-             });
+             };
 
              var user = new User();
 

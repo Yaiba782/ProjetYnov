@@ -6,6 +6,7 @@ var crypto = require('crypto');
 var BigNumber = require('bignumber.js');
 var jwt = require('jsonwebtoken');
 
+
 var addressSchema = new mongoose.Schema({
     address : {
         type : String,
@@ -36,20 +37,83 @@ var phoneNumberSchema = new mongoose.Schema({
 });
 mongoose.model('PhoneNumber', phoneNumberSchema, 'PhoneNumbers');
 
-var userSchema = new mongoose.Schema({
-    firstName: {
+
+var serviceSchema = new mongoose.Schema({
+    titre : {
+        type : String,
+        trim : true,
+        required : "veuillez saisir un titre pour votre annonce"
+    },
+    category: {
+        type :String,
+        trim : true,
+        required : "veuillez saisir une catégorie pour votre annonce"
+    },
+    subCategory : {
+        type : String,
+        trim : true,
+        required : "veuillez saisir une sous catégorie pour votre annonce"
+    },
+    shortDescription : {
+        type: String,
+        trim : true,
+        required: "veuillez saisir une courte de description"
+    },
+    detailedDescription : {
+        type : String,
+        trim : true,
+        required : "veuillez saisir une description détaillé"
+    },
+    addressRequest : {
+        type: String,
+        required : "veuillez saisir une address valide"
+    },
+    phoneNumber : {
         type : String
     },
 
+    pointNumber : {
+        type : Number,
+        required : "veuillez saisir un nombre de point"
+    },
+    done : {
+        type : Boolean,
+        "default" : false
+    },
+    inProgress : {
+        type : Boolean,
+        "default" : false
+    },
+    dateInProgress : {
+        type : Date
+    },
+    whoDoService : {
+        type : []
+    },
+    dateService : {
+        type : Date,
+        "default" : Date.now()
+    }
+});
+mongoose.model('Service', serviceSchema, 'Services');
+
+
+var userSchema = new mongoose.Schema({
+    firstName: {
+        type : String,
+        trim : true
+    },
+
     lastName: {
-        type :String
+        type :String,
+        trim : true
     },
     email: {
         type : String,
         unique : true,
         match:  [/.+\@.+\..+/, "Veuillez saisir une adresse email valide"],
         required : "veuillez saisir une adresse email",
-
+        trim : true
     },
     username: {
         type : String,
@@ -78,7 +142,6 @@ var userSchema = new mongoose.Schema({
     },
     birthDate : {
         type : Number,
-
         validate : {
             validator : function (birthDate) {
                 birthDate = new BigNumber(birthDate);
@@ -107,12 +170,15 @@ var userSchema = new mongoose.Schema({
         "default" : false
     },
     personalDescription : {
-        type : String
+        type : String,
+        trim : true
     },
     registrationDate : {
         type : Date,
         "default" : Date.now
-    }
+    },
+    services : [serviceSchema]
+
 });
 userSchema.methods.validPassword = function(password){
     var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');

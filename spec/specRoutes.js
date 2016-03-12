@@ -6,6 +6,7 @@ describe('test routes', function () {
     var app;
     var request;
     var User;
+
     beforeAll(function (done) {
        app = require('../bin/www');
         app = app.appReturn;
@@ -13,6 +14,7 @@ describe('test routes', function () {
         mongoose = require('mongoose');
         User = mongoose.model('User');
         mongoose.connection.collections['Users'].drop( function(err) {
+
             done();
         });
     });

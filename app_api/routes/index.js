@@ -10,6 +10,7 @@ var auth = jwt({
 });
 var ctrlAuthentication = require('../controllers/authentication');
 var ctrlUsers = require('../controllers/users');
+var ctrlService = require('../controllers/services');
 
 router.post('/register',  ctrlAuthentication.register);
 router.post('/login', ctrlAuthentication.login);
@@ -20,5 +21,7 @@ router.get('/users/:userid/userid', ctrlUsers.getOneUserById);
 router.post('/users', ctrlUsers.updateUser);
 router.post('/test1', ctrlUsers.test);
 //router.delete('/users', ctrlUsers.deleteUser);
+
+router.post('/services', ctrlService.addService);
 
 module.exports = router;
