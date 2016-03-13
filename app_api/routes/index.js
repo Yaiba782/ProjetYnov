@@ -22,6 +22,9 @@ router.post('/users', ctrlUsers.updateUser);
 router.post('/test1', ctrlUsers.test);
 //router.delete('/users', ctrlUsers.deleteUser);
 
-router.post('/services', ctrlService.addService);
+
+//services
+router.post('/services', auth, ctrlService.addService);
+router.get('/services', ctrlService.getAllServices);
 
 module.exports = router;

@@ -93,6 +93,9 @@ var serviceSchema = new mongoose.Schema({
     dateService : {
         type : Date,
         "default" : Date.now()
+    },
+    username : {
+        type : String
     }
 });
 mongoose.model('Service', serviceSchema, 'Services');

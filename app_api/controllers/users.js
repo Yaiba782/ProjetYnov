@@ -42,7 +42,7 @@ module.exports.getOneUserById = function (req, res) {
     });
 };
 
-module.exports.updateUser= function (req, res) {
+module.exports.updateUser = function (req, res) {
     getAuthor(req, res, function (req, res, username) {
         if((!req.body.address || !req.body.zipCode || !req.body.city)
             (!req.body.fixNumber && !req.mobilNumber)){

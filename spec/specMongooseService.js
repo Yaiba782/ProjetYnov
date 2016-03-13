@@ -19,8 +19,10 @@ describe('service', function () {
         detailedDescription : "description detaille",
         addressRequest : ["adresse", "code", "ville"],
         phoneNumber : "0606060606",
-        pointNumber : 10
+        pointNumber : 10,
+        username : username
     };
+
     beforeAll(function (done) {
         require('../bin/www');
         require('../bin/www');
@@ -36,6 +38,8 @@ describe('service', function () {
             user.setPassword(password);
             user.save(function (err, user) {
                 idUser = user._id;
+
+
                 done();
             });
         });
@@ -71,4 +75,59 @@ describe('service', function () {
             });
         });
     });
+    describe('when I get services', function () {
+        var originalTimeout;
+        beforeAll(function (done) {
+            var user = new User();
+            user.username = "aledreazreazer";
+            user.email = "alexandze@xsxdsq.com";
+            user.lastName = lastName;
+            user.firstName = firstName;
+            user.birthDate = user.formattedDate(birthDate);
+            user.setPassword(password);
+            user.save(function (err, user) {
+                service.titre = "username2";
+                service.username = user.username;
+                user.services.push(service);
+                user.save(function (err, user) {
+
+                });
+
+            });
+
+            User.findById(idUser, 'services', function (err, user) {
+                if(user){
+                    service.titre = "monTitre1";
+                    service.dateService = new Date('2016-02-17T05:24:00');
+                    user.services.push(service);
+                    user.save(function (err, user) {
+                        service.titre = "monTitre2";
+                        service.dateService = new Date('2016-03-17T05:24:00');
+                        user.services.push(service);
+                        user.save(function (err, user) {
+                            done();
+                        });
+                    });
+                }
+            });
+        });
+        it('should get all service', function (done) {
+            var allService = [];
+            var query = User.find({});
+            query.select('services');
+            query.exec(function (err, user) {
+                // console.log(user[0].services[0]);
+                for(var i = 0; i< user.length; i++){
+                    for (var y = 0; y< user[i].services.length; y++){
+                        allService.push(user[i].services[y]);
+                    }
+                }
+                expect(allService.length).toEqual(4);
+                done();
+            });
+        });
+    });
+
+
+
 });
