@@ -2,17 +2,8 @@
  * Created by alex on 12/03/16.
  */
 describe('when check if user exist', function () {
-    var func1;
-    var func2;
-    var func3;
-    var func4;
-    var mongoose;
-    var User;
-    var username = "alex";
-    var password = "123456";
-    var email = "exemple@ynov.com";
-    var birthDate = '14/01/1993';
-    var reqTest = {};
+    var func1, func2, func3, func4, mongoose, User, username = "alex",
+        password = "123456", email = "exemple@ynov.com", birthDate = '14/01/1993', reqTest = {};
     reqTest.body = {
         username : username,
         password : password,
@@ -21,10 +12,10 @@ describe('when check if user exist', function () {
     };
    var resTest = {};
     resTest.status = function (statusNumber) {
-        console.log(statusNumber);
+       // console.log(statusNumber);
     };
     resTest.json = function (content) {
-      console.log(content);
+     // console.log(content);
     };
 
     var sendJsonResponseTest = function (resTest, statusNumber, content) {

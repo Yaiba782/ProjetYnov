@@ -26,5 +26,5 @@ router.post('/test1', ctrlUsers.test);
 //services
 router.post('/services', auth, ctrlService.addService);
 router.get('/services', ctrlService.getAllServices);
-
+router.get('/services/:serviceId', ctrlService.getOneServiceById);
 module.exports = router;

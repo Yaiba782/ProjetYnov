@@ -6,6 +6,7 @@ var getAuthor = require("../../lib/func6getAuthor");
 var sendJsonResponse = require("../../lib/func5SendJsonResponse");
 var User = require('mongoose').model('User');
 var formattedJsonService = require("../../lib/func7FormattedJsonService");
+var matchServiceById = require("../../lib/func8matchServiceById");
 
 module.exports.addService = function(req, res){
     getAuthor(req, res, function (req, res, username) {
@@ -46,6 +47,7 @@ module.exports.addService = function(req, res){
 module.exports.getAllServices = function (req, res) {
     var allServicesTab = [];
     var query = User.find({});
+    query.select('services');
     query.exec(function (err, user) {
        if(err){
            sendJsonResponse(res, 404, err);
@@ -57,6 +59,7 @@ module.exports.getAllServices = function (req, res) {
             });
         }
         if(user){
+
             formattedJsonService(user, allServicesTab);
             if(allServicesTab.length > 0) {
                 sendJsonResponse(res, 200, allServicesTab);
@@ -69,5 +72,46 @@ module.exports.getAllServices = function (req, res) {
             }
         }
     });
+};
 
+module.exports.getOneServiceById = function (req, res) {
+    if(!req.params.serviceId){
+        sendJsonResponse(res, 404, {
+            "message" : "service pas trouvé"
+        });
+    }
+    var matchService;
+    var allServicesTab = [];
+    var query = User.find({});
+    query.select('services');
+    query.exec(function (err, user) {
+       if(err){
+           sendJsonResponse(res, 404, err);
+           return;
+       }
+        if(!user){
+            sendJsonResponse(res, 404, {
+                "message" : "aucun service dans la base"
+            });
+            return;
+        }
+        if(user){
+            formattedJsonService(user, allServicesTab);
+            if(allServicesTab.length > 0){
+                matchService = matchServiceById(allServicesTab, req.params.serviceId);
+                if(!matchService){
+                    sendJsonResponse(res, 404, {
+                        "message" : "service pas trouvé1"
+                    });
+                    return;
+                }
+                if(matchService){
+                    sendJsonResponse(res, 200, matchService);
+                    return;
+                }
+            }
+        }
+        return;
+    });
+    return;
 };
