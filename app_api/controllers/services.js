@@ -7,6 +7,7 @@ var sendJsonResponse = require("../../lib/func5SendJsonResponse");
 var User = require('mongoose').model('User');
 var formattedJsonService = require("../../lib/func7FormattedJsonService");
 var matchServiceById = require("../../lib/func8matchServiceById");
+var findIndexService = require("../../lib/func9FindIndexService");
 
 module.exports.addService = function(req, res){
     getAuthor(req, res, function (req, res, username) {
@@ -32,8 +33,11 @@ module.exports.addService = function(req, res){
                         return;
                     }
                     if(user){
+                        var lenghth = user.services.length;
+
                         sendJsonResponse(res, 200, {
-                            "message" : "le service a était ajouter correcte"
+                            "message" : "le service a était ajouter correcte",
+                            "serviceIdAdded" : user.services[lenghth - 1]._id
                         });
                         return;
                     }
@@ -101,7 +105,7 @@ module.exports.getOneServiceById = function (req, res) {
                 matchService = matchServiceById(allServicesTab, req.params.serviceId);
                 if(!matchService){
                     sendJsonResponse(res, 404, {
-                        "message" : "service pas trouvé1"
+                        "message" : "service pas trouvé"
                     });
                     return;
                 }
@@ -114,4 +118,98 @@ module.exports.getOneServiceById = function (req, res) {
         return;
     });
     return;
+};
+
+module.exports.getAllServicesByUsername = function (req, res) {
+    if(!req.params.username){
+        sendJsonResponse(res, 404,{
+            "message" : "aucun service trouvé"
+        });
+        return;
+    }
+    User.findOne({username : req.params.username}, 'services', function (err, user) {
+       if(err){
+           sendJsonResponse(res, 404, err);
+           return;
+       }
+        if(!user){
+            sendJsonResponse(res, 404, {
+                "message" : "l'utilisateur n'existe pas"
+            });
+            return;
+        }
+        if(user.services.length == 0){
+            sendJsonResponse(res, 200, {
+                "message" : "vous n'avez aucun service"
+            });
+            return;
+        }
+        sendJsonResponse(res, 200, user.services);
+        return;
+    });
+    return;
+
+};
+module.exports.updateServiceById = function (req, res) {
+    getAuthor(req, res, function (req, res, username) {
+        if(!req.params.serviceId || !username){
+            sendJsonResponse(res, 404, {
+                "message" : "service pas trouvé"
+            });
+        }
+        if(!req.body.titre || !req.body.category || !req.body.subCategory || !req.body.shortDescription ||
+            !req.body.detailedDescription || !req.body.addressRequest || !req.body.phoneNumber ||
+            !req.body.pointNumber){
+            sendJsonResponse(res, 404, {
+                "message" : "veuillez entrer les champs necessaire pour creer votre service"
+            });
+            return;
+        }
+        User.findOne({username : username}, 'services', function (err, user) {
+            if(err){
+                sendJsonResponse(res, 404, err);
+                return;
+            }
+            if(!user){
+                sendJsonResponse(res, 404, {
+                    "message" : "utilisateur pas trouvé"
+                });
+                return;
+            }
+            if(user){
+                var indexService = null;
+                indexService = findIndexService(user.services, req.params.serviceId);
+                if(indexService === null){
+                    sendJsonResponse(res, 404, {
+                        "message" : "erreur de modification de service"
+                    });
+                    return;
+                }
+                if(indexService !== null){
+                    var elementRemoved = user.services.splice(indexService, 1);
+                    user.services.push(req.body);
+                    user.save(function (err, user) {
+                       if(err){
+                           sendJsonResponse(res, 404, err);
+                           return;
+                       }
+                        if(!user){
+                            sendJsonResponse(res, 404, {
+                                "message" : "erreur de modification"
+                            });
+                            return;
+                        }
+                        if(user){
+                            sendJsonResponse(res, 200, {
+                                "message" : "votre service a été modifié avec succces"
+                            });
+                            // console.log(user);
+
+                            return;
+                        }
+                    });
+                }
+            }
+        });
+    }, sendJsonResponse, User);
 };

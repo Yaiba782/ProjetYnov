@@ -1,10 +1,10 @@
 /**
- * Created by alex on 13/03/16.
+ * Created by alex on 14/03/16.
  */
-describe('service get', function () {
-    var _ = require('lodash');
+
+describe('service put', function () {
     var mongoose, app, request, User, firstName = 'alexandre', lastName = 'famille', username = "alex",
-        password = "123456", email = "exemple@ynov.com",birthDate = '14/01/1993', idUser, token1, token2, idService1,
+        password = "123456", email = "exemple@ynov.com",birthDate = '14/01/1993', idUser, token1, token2, service1,
         idService2;
     var service = {
         titre : "service1",
@@ -54,7 +54,8 @@ describe('service get', function () {
                                         .form(service)
                                         .expect(200)
                                         .end(function (err, res, body) {
-
+                                            body = JSON.parse(body);
+                                            idService2 = body.serviceIdAdded;
                                             done();
                                         });
 
@@ -63,38 +64,30 @@ describe('service get', function () {
                 });
         });
     });
-    describe('when I get service', function () {
-        it('should get all services', function (done) {
+    describe("when I update service", function () {
+        it('should update', function (done) {
+            service.titre = "modifier service de user23";
             request(app)
-                .get('/api/services')
+                .put('/api/services/' + idService2)
+                .headers({"Authorization": 'Bearer ' + token2.token})
+                .form(service)
                 .expect(200)
-                .end(function(err, res, body){
+                .end(function (err, res, body) {
                     body = JSON.parse(body);
-                    idService1 = body[0]._id;
-                    idService2 = body[1]._id;
-                    // console.log(JSON.stringify(body, null, 2));
-                    expect(body.length).toEqual(2);
-                    expect(body[0].titre).toEqual("service1");
-                    expect(body[1].titre).toEqual("service2");
+                    expect(body.message).toEqual("votre service a été modifié avec succces");
                     done();
                 });
         });
-        it('should get one service', function (done) {
+        it("should not update because the user not have this service", function (done) {
+            service.titre = "modifier service de user23";
             request(app)
-               .get('/api/services/' + idService1 + '/getOneServiceById')
-               .end(function(err, res, body){
-                   body = JSON.parse(body);
-                   expect(body._id).toEqual(idService1);
-                   done();
-               });
-        });
-        it('should get all service by username', function (done) {
-            request(app)
-                .get('/api/services/' + username + '/getAllServicesByUsername')
+                .put('/api/services/' + idService2)
+                .headers({"Authorization": 'Bearer ' + token1.token})
+                .form(service)
+                .expect(404)
                 .end(function (err, res, body) {
                     body = JSON.parse(body);
-                    //console.log(JSON.stringify(body, null, 2));
-                    expect(body[0].titre).toEqual("service1");
+                    expect(body.message).toEqual('erreur de modification de service');
                     done();
                 });
         });

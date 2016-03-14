@@ -20,6 +20,7 @@ describe('mongoose service post', function () {
         mongoose = require('mongoose');
         User = mongoose.model('User');
         mongoose.connection.collections['Users'].drop( function(err) {
+            //user1 : alex
             var user = new User();
             user.username = username;
             user.email = email;
@@ -30,6 +31,7 @@ describe('mongoose service post', function () {
             user.services.push(service);
             user.save(function (err, user) {
                 //console.log(JSON.stringify(user, null, 2));
+                //user2 : user23
                 var user2 = new User();
                 user2.username = "user2name";
                 user2.email = "exemple2@ezfzef.com";
@@ -95,6 +97,12 @@ describe('mongoose service post', function () {
                 done();
             });
         });
+        it('should get all service by username', function (done) {
+            User.findOne({username : username}, 'services', function (err, user) {
+                expect(user.services[0].titre).toEqual("service1");
+               // console.log(JSON.stringify(user.services, null, 2));
+                done();
+            });
+        });
     });
-
 });
