@@ -1546,6 +1546,7 @@ form#contact-form input[type="submit"] {
 }
 .card .footer .social-links{
     font-size: 18px;
+    padding: 10px;
 }
 .card .footer .social-links a{
     margin: 0 7px;
