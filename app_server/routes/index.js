@@ -5,6 +5,6 @@ var ctrlMain = require('../controllers/main');
 
 
 /* GET home page. */
-router.get('/', ctrlMain.index);
+router.get('/', ctrlMain.angularApp);
 
 module.exports = router;

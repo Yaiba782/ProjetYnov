@@ -29,4 +29,5 @@ router.get('/services', ctrlService.getAllServices);
 router.get('/services/:serviceId/getOneServiceById', ctrlService.getOneServiceById);
 router.get('/services/:username/getAllServicesByUsername', ctrlService.getAllServicesByUsername);
 router.put('/services/:serviceId', auth, ctrlService.updateServiceById);
+router.delete('/services/:serviceId', auth, ctrlService.deleteServiceById);
 module.exports = router;

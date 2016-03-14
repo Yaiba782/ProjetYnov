@@ -213,3 +213,67 @@ module.exports.updateServiceById = function (req, res) {
         });
     }, sendJsonResponse, User);
 };
+module.exports.deleteServiceById = function (req, res) {
+    getAuthor(req, res, function (req, res, username) {
+        if(!req.params.serviceId){
+            sendJsonResponse(res, 404, {
+                "message" : "il manque le paramètre"
+            });
+            return;
+        }
+        if(!username){
+            sendJsonResponse(res, status, {
+                "message" : "pas d'utilisateur touvé"
+            });
+            return;
+        }
+        User.findOne({username : username}, 'services', function (err, user) {
+            if(err){
+                sendJsonResponse(res, 404, err);
+                return;
+            }
+            if(!user){
+                sendJsonResponse(res, 404, {
+                    "message" : "pas d'utilisateur trouvé"
+                });
+                return;
+            }
+            if(user.services.length == 0){
+                sendJsonResponse(res, 404, {
+                    "message" : "vous ne possedez pas de service"
+                });
+                return;
+            }
+            var index;
+            index = findIndexService(user.services, req.params.serviceId);
+            if(index === null){
+                sendJsonResponse(res, 404, {
+                    "message" : "vous ne pouvez pas supprimer pas ce service"
+                });
+                return;
+            }
+            user.services.splice(index, 1);
+            user.save(function (err, user) {
+                if(err){
+                    sendJsonResponse(res, 404, err);
+                    return;
+                }
+                if(!user){
+                    sendJsonResponse(res, 404, {
+                        "message" : "utilisateur pas trouvé"
+                    });
+                    return;
+                }
+                sendJsonResponse(res, 204, {
+                   "message" : "votre service à bien était suprimé"
+                });
+                return;
+            });
+            return;
+
+        });
+        return;
+
+
+    }, sendJsonResponse, User);
+};
