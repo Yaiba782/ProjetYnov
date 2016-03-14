@@ -1685,3 +1685,13 @@ form#contact-form input[type="submit"] {
         visibility: visible;
     }
 }
+
+.card-container .a-inherit  {
+  color: inherit;
+  text-decoration: none !important;
+}
+
+.card-container .a-inherit{
+  color: inherit;
+  text-decoration: none !important;
+}
