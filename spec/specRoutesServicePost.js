@@ -10,10 +10,16 @@ describe('service post', function () {
         subCategory : "sous categorie",
         shortDescription : "courte description",
         detailedDescription : "description detaille",
-        addressRequest : "adresseville",
-        phoneNumber : "0606060606",
+        address : "1 rue paris",
+        city : "paris",
+        zipCode : "75016",
+        mobilNumber : "",
+        fixNumber : "",
         pointNumber : 10
     };
+
+
+
     beforeAll(function (done) {
         app = require('../bin/www');
         app = app.appReturn;
@@ -63,6 +69,11 @@ describe('service post', function () {
     });
     describe("when I add service", function () {
         it('should response status 200', function (done) {
+                service.address = "18 rue Ynov";
+                service.city = "Paris";
+                service.zipCode = "75016";
+                service.fixNumber = "0151618960";
+                service.mobilNumber = "0651618950";
                request(app)
                    .post('/api/services')
                    .headers({"Authorization": 'Bearer ' + token1.token})
@@ -70,6 +81,7 @@ describe('service post', function () {
                    .expect(200)
                    .end(function (err, res, body) {
                        body = JSON.parse(body);
+                       console.log(body);
                        expect(body.message).toEqual('le service a était ajouter correcte');
                        done();
                    });

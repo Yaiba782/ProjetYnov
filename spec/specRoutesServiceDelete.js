@@ -10,8 +10,11 @@ describe('service delete', function () {
         subCategory : "sous categorie",
         shortDescription : "courte description",
         detailedDescription : "description detaille",
-        addressRequest : "adresseville",
-        phoneNumber : "0606060606",
+        address : "1 rue paris",
+        city : "paris",
+        zipCode : "75016",
+        mobilNumber : "",
+        fixNumber : "",
         pointNumber : 10
     }, idService1;
     beforeAll(function (done) {

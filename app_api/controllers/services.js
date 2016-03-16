@@ -8,12 +8,13 @@ var User = require('mongoose').model('User');
 var formattedJsonService = require("../../lib/func7FormattedJsonService");
 var matchServiceById = require("../../lib/func8matchServiceById");
 var findIndexService = require("../../lib/func9FindIndexService");
+var createObjectService = require("../../lib/func10CreateObjectService");
 
 module.exports.addService = function(req, res){
     getAuthor(req, res, function (req, res, username) {
-        if(!req.body.titre || !req.body.category || !req.body.subCategory || !req.body.shortDescription ||
-            !req.body.detailedDescription || !req.body.addressRequest || !req.body.phoneNumber ||
-            !req.body.pointNumber){
+        if(!req.body.titre || !req.body.category || !req.body.subCategory || !req.body.shortDescription
+            || !req.body.detailedDescription || !req.body.address || !req.body.city || !req.body.zipCode
+            || !req.body.pointNumber){
             sendJsonResponse(res, 404, {
                 "message" : "veuillez entrer les champs necessaire pour creer votre service"
             });
@@ -26,7 +27,8 @@ module.exports.addService = function(req, res){
             }
             if(user){
                 req.body.username = username;
-                user.services.push(req.body);
+                var service = createObjectService(req.body);
+                user.services.push(service);
                 user.save(function (err) {
                     if(err){
                         sendJsonResponse(res, 404, err);
@@ -156,9 +158,9 @@ module.exports.updateServiceById = function (req, res) {
                 "message" : "service pas trouvé"
             });
         }
-        if(!req.body.titre || !req.body.category || !req.body.subCategory || !req.body.shortDescription ||
-            !req.body.detailedDescription || !req.body.addressRequest || !req.body.phoneNumber ||
-            !req.body.pointNumber){
+        if(!req.body.titre || !req.body.category || !req.body.subCategory || !req.body.shortDescription
+            || !req.body.detailedDescription || !req.body.address || !req.body.city || !req.body.zipCode
+            || !req.body.pointNumber){
             sendJsonResponse(res, 404, {
                 "message" : "veuillez entrer les champs necessaire pour creer votre service"
             });
@@ -186,7 +188,9 @@ module.exports.updateServiceById = function (req, res) {
                 }
                 if(indexService !== null){
                     var elementRemoved = user.services.splice(indexService, 1);
-                    user.services.push(req.body);
+                    var service = createObjectService(req.body);
+
+                    user.services.push(service);
                     user.save(function (err, user) {
                        if(err){
                            sendJsonResponse(res, 404, err);

@@ -4,17 +4,19 @@
 describe('mongoose service put', function () {
     var mongoose, User, firstName = 'alexandre', lastName = 'famille', username = "alex", password = "123456",
         email = "exemple@ynov.com", birthDate = '14/01/1993', idUser,
-        service = {
-            titre : "monTitre1",
-            category : "ma categorie",
-            subCategory : "sous categorie",
-            shortDescription : "courte description",
-            detailedDescription : "description detaille",
-            addressRequest : ["adresse", "code", "ville"],
-            phoneNumber : "0606060606",
-            pointNumber : 10,
-            username : username
-        }, idService1, idService2;
+    service = {
+        titre : "service1",
+        category : "ma categorie",
+        subCategory : "sous categorie",
+        shortDescription : "courte description",
+        detailedDescription : "description detaille",
+        address : "1 rue paris",
+        city : "paris",
+        zipCode : "75016",
+        mobilNumber : "",
+        fixNumber : "",
+        pointNumber : 10
+    }, idService1, idService2;
     beforeAll(function (done) {
         require('../bin/www');
         mongoose = require('mongoose');

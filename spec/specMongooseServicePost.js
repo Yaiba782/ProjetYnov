@@ -3,18 +3,31 @@
  */
 describe('mongoose service post', function () {
     var mongoose, User, firstName = 'alexandre', lastName = 'famille', username = "alex", password = "123456",
-        email = "exemple@ynov.com", birthDate = '14/01/1993', idUser,
+        email = "exemple@ynov.com", birthDate = '14/01/1993', idUser, address = '78 avenue crozatier',
+        zipCode = '75016' , city = 'paris',
+        addressSave = {
+            address : address,
+            zipCode : zipCode,
+            city : city
+        },
+        phoneNumber = {
+        fixNumber : "0151618960",
+        mobilNumber : "0651618960"
+        },
         service = {
-        titre : "monTitre",
-        category : "ma categorie",
-        subCategory : "sous categorie",
-        shortDescription : "courte description",
-        detailedDescription : "description detaille",
-        addressRequest : ["adresse", "code", "ville"],
-        phoneNumber : "0606060606",
-        pointNumber : 10,
-        username : username
+            titre : "monTitre",
+            category : "ma categorie",
+            subCategory : "sous categorie",
+            shortDescription : "courte description",
+            detailedDescription : "description detaille",
+            addressRequest : [],
+            phoneNumber : [],
+            pointNumber : 10,
+            username : username
     };
+        service.addressRequest.push(addressSave);
+        service.phoneNumber.push(phoneNumber);
+
     beforeAll(function (done) {
         require('../bin/www');
         mongoose = require('mongoose');
@@ -37,12 +50,14 @@ describe('mongoose service post', function () {
         it('should save the service in the document', function (done) {
             User.findById(idUser, 'services', function (err, user) {
                 if(user){
+
                     user.services.push(service);
+
                 }
                 user.save(function (err, user) {
                     //console.log(JSON.stringify(user, null, 2));
                     User.findById(idUser, function (err, user) {
-                        // console.log(JSON.stringify(user, null, 2));
+                         //console.log(JSON.stringify(user, null, 2));
                         expect(user.services[0].titre).toEqual("monTitre");
                         expect(user.services[0].category).toEqual("ma categorie");
                         done();

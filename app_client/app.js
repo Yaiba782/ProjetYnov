@@ -6,13 +6,18 @@ angular.module('pointService', ['ngRoute']);
 function config ($routeProvider){
     $routeProvider
         .when('/', {
-            templateUrl : 'home/index.html',
+            templateUrl : 'home/home.view.html',
             controller : 'ctrlHome',
             controllerAs : 'vm'
         })
         .when('/registerLogin', {
             templateUrl : 'auth/registerLogin/registerLogin.view.html',
             controller : 'ctrlRegisterLogin',
+            controllerAs : 'vm'
+        })
+        .when('/addService', {
+            templateUrl : 'service/addService/addService.view.html',
+            controller : 'ctrlAddService',
             controllerAs : 'vm'
         })
         .otherwise({redirectTo : '/'});

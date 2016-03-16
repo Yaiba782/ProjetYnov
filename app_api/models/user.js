@@ -64,13 +64,8 @@ var serviceSchema = new mongoose.Schema({
         trim : true,
         required : "veuillez saisir une description détaillé"
     },
-    addressRequest : {
-        type: String,
-        required : "veuillez saisir une address valide"
-    },
-    phoneNumber : {
-        type : String
-    },
+    addressRequest : [addressSchema],
+    phoneNumber : [phoneNumberSchema],
 
     pointNumber : {
         type : Number,

@@ -12,8 +12,11 @@ describe('mongoose service delete', function () {
         subCategory : "sous categorie",
         shortDescription : "courte description",
         detailedDescription : "description detaille",
-        addressRequest : "adresseville",
-        phoneNumber : "0606060606",
+        address : "1 rue paris",
+        city : "paris",
+        zipCode : "75016",
+        mobilNumber : "",
+        fixNumber : "",
         pointNumber : 10
     };
     beforeAll(function (done) {
@@ -46,6 +49,7 @@ describe('mongoose service delete', function () {
                                 .form(service)
                                 .expect(200)
                                 .end(function (err, res, body) {
+
                                     body = JSON.parse(body);
                                     idService1 = body.serviceIdAdded;
                                     service.titre = "service2";
