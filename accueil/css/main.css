@@ -1791,3 +1791,9 @@ form#contact-form input[type="submit"] {
 .tall {
   margin-top: 30px;
 }
+
+.hey{
+    position: fixed;
+    z-index: 999;
+    margin-top: -1%; 
+}
