@@ -22,7 +22,7 @@
          });
           BigNumber = require('bignumber.js');
      });
-     afterAll(function (done) {
+    afterAll(function (done) {
          mongoose.connection.collections['Users'].drop(function (err) {
              done();
          });
@@ -219,11 +219,12 @@
              user.username = username;
              user.email = email;
              user.birthDate = user.formattedDate(birthDate);
-             user.phoneNumber = phoneNumber;
-             user.address = addressSave;
+             user.phoneNumber.push(phoneNumber);
+             user.address.push(addressSave);
              user.setPassword(password);
              user.save(function (err, user) {
                  expect(user).toBeTruthy();
+                 //console.log(user);
                  done();
              });
          });

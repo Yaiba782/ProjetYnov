@@ -10,6 +10,7 @@
     "npm": "~3.8.0"
   },
   "dependencies": {
+    "angular-mocks": "^1.5.0",
     "bignumber.js": "^2.3.0",
     "body-parser": "~1.13.2",
     "cookie-parser": "~1.3.5",
@@ -26,8 +27,14 @@
     "morgan": "~1.6.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "phantomjs-prebuilt": "^2.1.5",
     "serve-favicon": "~2.3.0",
     "superagent": "^1.8.0",
     "supertest": "^1.2.0"
+  },
+  "devDependencies": {
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-jasmine": "^0.3.7"
   }
 }

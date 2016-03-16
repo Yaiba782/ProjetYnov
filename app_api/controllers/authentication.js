@@ -39,7 +39,7 @@ module.exports.login = function (req, res) {
         if(user){
             token = user.generateJwt();
             sendJsonResponse(res, 200, {
-                "toke" : token
+                "token" : token
             });
             return;
         }

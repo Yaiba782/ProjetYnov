@@ -11,7 +11,9 @@ function config ($routeProvider){
             controllerAs : 'vm'
         })
         .when('/connexion', {
-
+            templateUrl : 'auth/registerLogin/registerLogin.view.html',
+            controller : 'ctrlRegisterLogin',
+            controllerAs : 'vm'
         })
         .otherwise({redirectTo : '/'});
 }
