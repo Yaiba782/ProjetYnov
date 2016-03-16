@@ -63,7 +63,6 @@ module.exports.getAllServices = function (req, res) {
             });
         }
         if(user){
-
             formattedJsonService(user, allServicesTab);
             if(allServicesTab.length > 0) {
                 sendJsonResponse(res, 200, allServicesTab);

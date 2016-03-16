@@ -10,7 +10,7 @@ function config ($routeProvider){
             controller : 'ctrlHome',
             controllerAs : 'vm'
         })
-        .when('/connexion', {
+        .when('/registerLogin', {
             templateUrl : 'auth/registerLogin/registerLogin.view.html',
             controller : 'ctrlRegisterLogin',
             controllerAs : 'vm'
