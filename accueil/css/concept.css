@@ -1,0 +1,29 @@
+.concept {
+  width:70%;
+  margin: auto;
+  margin-top: 2%;
+  
+}
+
+.concept_image {
+  padding: 20px;
+  width: 45%;
+  height: auto;
+  float: right
+  
+}
+
+.concept_text {
+  padding: 20px;
+}
+
+.concept h1 {
+  width: 30%;
+  margin: auto;
+  
+}
+
+.buttons_concept {
+  width: 30%;
+  margin: auto;
+}
