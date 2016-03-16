@@ -4,14 +4,16 @@
 angular
     .module('pointService')
     .service('services', services);
-    service.$inject = ['$http', 'authentication'];
+    services.$inject = ['$http', 'authentication'];
 
-function services($http){
-    var addService = function (service, authentication) {
+function services($http, authentication){
+    var addService = function (service) {
         return $http.post('/api/services', service, {
             headers : {
                 Authorization : 'Bearer ' + authentication.getToken()
             }
+        }).success(function (data) {
+            return;
         });
     };
     var getAllServices = function () {
@@ -37,10 +39,6 @@ function services($http){
             }
         });
     };
-
-
-
-
 
     return {
         addService : addService,

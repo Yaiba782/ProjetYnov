@@ -10,6 +10,7 @@
     "npm": "~3.8.0"
   },
   "dependencies": {
+    "angular-messages": "^1.5.1",
     "angular-mocks": "^1.5.0",
     "bignumber.js": "^2.3.0",
     "body-parser": "~1.13.2",

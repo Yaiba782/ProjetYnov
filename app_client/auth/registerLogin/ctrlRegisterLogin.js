@@ -80,9 +80,9 @@ function ctrlRegisterLogin($location, authentication){
         if(vm.checkPasswordRegister != vm.register.password){
             vm.formErrorRegister = "veuillez saisir le même mot de passe dans les 2 champs pour la vérification";
             return false;
-        }else {
-            vm.doRegister();
-            return true;
         }
+        vm.doRegister();
+        return true;
+
     }
 }

@@ -14,66 +14,74 @@
         <!-- begin .why-attend -->
         <div>
             <h1 class="titre">Création d'annonce</h1>
-            <form class="formulaire" method="get" action="">
+            <form  ng-submit="vm.onSubmitAddService()" name="vm.formAddService"  class="formulaire" action="">
                 <div>
-                    <label class="text" for="Titre">Titre de l'annonce :<b class="ast">*</b></label>
-                    <input type="text" placeholder="Titre" class="input" required></input>
+                    <label class="text" for="titre">Titre de l'annonce :<b class="ast">*</b></label>
+                    <input type="text" placeholder="Titre" class="input" id="titre"
+                           ng-model="vm.addService.titre"  ng-minlength="5" ng-maxlength="35" required>
                 </div>
                 <div class="section">
                     <label class="text" for="Catégorie">Catégorie de l'annonce :<b class="ast">*</b></label>
-                    <select name="select" id="Catégorie" class="select" required>
-                        <option value="" selected disabled>Categorie</option>
-                        <option value="value1">Menage</option>
-                        <option value="value2">Bricolage</option>
+                    <select name="select" id="Catégorie" class="select"
+                            ng-model="vm.currentCategory" ng-click="vm.setSubCategory(vm.currentCategory)" required>
+                        <option value="{{vm.optionValue.aideMenager}}">Aide-ménagère</option>
+                        <option value="{{vm.optionValue.jardinage}}">Jardinage</option>
+                        <option value="{{vm.optionValue.informatique}}">Informatique</option>
+                        <option value="{{vm.optionValue.bienEtre}}">Bien-être</option>
+                        <option value="{{vm.optionValue.coursSoutienScolaire}}">Cours / Soutien scolaire</option>
+                        <option value="{{vm.optionValue.bricolage}}">Bricolage</option>
+                        <option value="{{vm.optionValue.demenagement}}">Déménagement</option>
+                        <option value="{{vm.optionValue.automobile}}">Automobile</option>
+                        <option value="{{vm.optionValue.autres}}">Autres</option>
+                        <option value="{{vm.optionValue.administratif}}">Administratif</option>
                     </select>
+
                 </div>
                 <div class="section">
                     <label class="text" for="Sous-catégorie">Sous-catégorie de l'annonce :<b class="ast">*</b></label>
-                    <select name="select" id="Sous-catégorie" class="select" required>
-                        <option value="" selected disabled>Sous-categorie</option>
-                        <option value="value1">petite truc</option>
-                        <option value="value2">gros truc</option>
+                    <select name="select" id="Sous-catégorie" class="select"
+                            ng-model="vm.currentSubCategory" ng-click="vm.getCurrentSubCategory(vm.currentSubCategory)"  required>
+                        <option ng-repeat="subCategory in vm.subCategoryArray track by $index" value="{{subCategory}}">{{subCategory}}</option>
                     </select>
                 </div>
                 <div class="section">
-                    <label class="text" for="Descriptioncourte">Description courte de l'annonce :<b class="ast">*</b></label>
-                    <textarea class="descriptioncourte" name="Description courte" class="input" id="" cols="30" rows="2" placeholder="Description courte" required></textarea>
+                    <label class="text" for="descriptioncourte">Description courte de l'annonce :<b class="ast">*</b></label>
+                    <textarea  class="descriptioncourte" name="Description courte" class="input" id="descriptioncourte"
+                               cols="30" rows="2" placeholder="Description courte"
+                               ng-model="vm.addService.shortDescription"  ng-minlength="10" ng-maxlength="100" required></textarea>
+
                 </div>
                 <div class="section">
-                    <label class="text" for="Descriptiondétaillée">Description détaillée de l'annonce :</label>
-                    <textarea class="descriptiondetaille" name="Description détaillée" class="input" id="" cols="30" rows="6" placeholder="Description détaillée"></textarea>
+                    <label class="text" for="descriptiondétaillée">Description détaillée de l'annonce :</label>
+                    <textarea class="descriptiondetaille" name="Description détaillée" class="input" id="descriptiondétaillée"
+                              cols="30" rows="6" placeholder="Description détaillée"
+                    ng-model="vm.addService.detailedDescription" ng-minlength="10"></textarea>
                 </div>
                 <div class="section">
-                    <label class="text" for="Adresse">Adresse du lieu de demande de service :<b class="ast">*</b></label>
-                    <input type="text" placeholder="Adresse" class="adresse" required></input>
-                    <input type="text" placeholder="Code Postal" class="code" required></input>
-                    <input type="text" placeholder="Ville" required></input>
+                    <label class="text" >Adresse du lieu de demande de service :<b class="ast">*</b></label>
+                    <input type="text" placeholder="Adresse" class="adresse" ng-model="vm.addService.address" required>
+                    <input type="text" placeholder="Code Postal" class="code" ng-model="vm.addService.zipCode" required>
+                    <input type="text" placeholder="Ville" ng-model="vm.addService.city" required>
                 </div>
                 <div class="section">
-                    <label class="text" for="tel">Numéro de téléphone :<b class="ast">*</b></label>
-                    <input type="text" placeholder="Téléphone" class="input" required></input>
+                    <label class="text" >Numéro de téléphone mobile :<b class="ast">*</b></label>
+                    <input type="text" placeholder="Téléphone" class="input"
+                           ng-model="vm.addService.mobilNumber"   ng-minlength="10" ng-maxlength="10">
                 </div>
                 <div class="section">
-                    <label class="text" for="Adresse">Nombre de points donnés pour le service :<b class="ast">*</b></label>
+                    <label class="text">Nombre de points donnés pour le service :<b class="ast">*</b></label>
                     <div class="point">
                         <div class="divalignement">
-                            <input class="points" type="text" value="1"></input>
-                        </div>
-                        <div class="divalignement hb">
-                            <button type="button" class="btn btn-default" class="haut">
-                                <i class="fa fa-arrow-up"></i>
-                            </button>
-                            <button type="button" class="btn btn-default" class="bas">
-                                <i class="fa fa-arrow-down"></i>
-                            </button>
+                            <input class="points" type="number"
+                                   ng-model="vm.addService.pointNumber" required>
                         </div>
                     </div>
                 </div>
-                <div class="section sub_button">
-                    <button type="submit" class="btn btn-default">
-                        Publier
-                    </button>
-                </div>
+                    <div class="section sub_button">
+                        <button ng-disabled="!vm.formAddService.$valid" type="submit" class="btn btn-default">
+                            Publier
+                        </button>
+                    </div>
             </form>
         </div>
         <!-- end .why-attend -->
