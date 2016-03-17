@@ -1,20 +1,25 @@
+.espace {
+  height: 30px;
+}
+
 .concept {
   width:70%;
   margin: auto;
-  margin-top: 2%;
-  
+  height: 700px;
 }
 
-.concept_image {
-  padding: 20px;
-  width: 45%;
+.concept-image {
+  padding: 0;
+  padding-top: 5% !important;
+  width: 26%;
   height: auto;
-  float: right
+  float: right;
   
 }
 
 .concept_text {
   padding: 20px;
+  text-align: justify;
 }
 
 .concept h1 {
