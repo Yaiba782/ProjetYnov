@@ -30,12 +30,12 @@ function config ($routeProvider){
             controller : 'ctrlGetOneServiceById',
             controllerAs :'vm'
         })
+
         .when('/updateServiceById', {
             templateUrl : 'service/addService/addService.view.html',
             controller : 'ctrlUpdateServiceById',
             controllerAs : 'vm'
         })
-
         .otherwise({redirectTo : '/'});
 }
 
