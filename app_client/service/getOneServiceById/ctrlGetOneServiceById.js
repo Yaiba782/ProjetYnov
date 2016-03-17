@@ -16,8 +16,6 @@ function ctrlGetOneServiceById($location, services, authentication){
     var serviceId = $location.search();
     vm.isMyService = false;
 
-
-    console.log(serviceId.id);
     if(serviceId){
         services
             .reqGetOneServiceById(serviceId.id)
@@ -27,11 +25,9 @@ function ctrlGetOneServiceById($location, services, authentication){
             .then(function () {
                 vm.serviceById = services.getOneServiceById();
                 vm.isMyService = vm.serviceById.username === currentUser.username;
-
             });
-
-
     }
+
 
 
 }

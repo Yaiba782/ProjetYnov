@@ -5,13 +5,18 @@ angular
     .module('pointService')
     .controller('ctrlAddService', ctrlAddService);
 
-ctrlAddService.$inject = ['$location', 'services'];
+ctrlAddService.$inject = ['$location', 'services', 'authentication', '$ngBootbox'];
 
-function ctrlAddService($location, services){
+function ctrlAddService($location, services, authentication, $ngBootbox){
+
     var vm = this;
+    vm.isLoggedIn = authentication.isLoggedIn();
+    vm.textIfNotLogged = "Veuillez vous connecter pour publier une annonce";
+    vm.titrePage = "Création service";
+    vm.textButtonSubmit = "Publier";
     vm.currentCategory ="";
     vm.subCategoryArray = null;
-    vm.formErrorAddService = "";
+    vm.formErrorAddService = [];
     vm.category = "";
     vm.currentSubCategory = "";
     vm.subCategory = "";
@@ -43,40 +48,40 @@ function ctrlAddService($location, services){
 
     vm.onSubmitAddService = function () {
         vm.doAddService = function () {
-            vm.formErrorAddService ="";
-                services
-                    .addService(vm.addService)
-                    .error(function (err) {
-                        vm.formErrorAddService = err;
-                    })
-                    .then(function () {
-                        $location.path('/');
-                    });
+            vm.formErrorAddService =[];
+            services
+                .addService(vm.addService)
+                .error(function (err) {
+                    formattedError(err);
+                    var stringError = formattedErrorArray();
+                    $ngBootbox.alert(stringError);
+
+                })
+                .then(function () {
+                        $ngBootbox.alert('Votre service à bien été crée')
+                            .then(function() {
+                                $location.path('/getAllServices');
+                            });
+                });
         };
-        vm.formErrorAddService ="";
+        vm.formErrorAddService =[];
         if(!vm.addService.titre || !vm.category || !vm.subCategory || !vm.addService.shortDescription
             || !vm.addService.detailedDescription || !vm.addService.address || !vm.addService.city
         || !vm.addService.zipCode || !vm.addService.mobilNumber || !vm.addService.pointNumber){
-            vm.formErrorAddService = "veuillez saisir tout les champs";
+            vm.formErrorAddService.push("veuillez saisir tout les champs");
+            formattedError(err);
+            var stringError = formattedErrorArray();
+            $ngBootbox.alert(stringError);
             return false;
         }
         vm.addService.subCategory = vm.subCategory;
         vm.addService.category = vm.category;
         vm.doAddService();
         return true;
-    }
+    };
 
+    var formattedError = services.formattedError(vm);
 
-
-
-
-
-
-
-
-
-
-
-
+    var formattedErrorArray = services.formattedErrorArray(vm);
 
 }

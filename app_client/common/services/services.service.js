@@ -75,11 +75,13 @@ function services($http, authentication){
             saveAllServiceByUsername(data);
         });
     };
-    var updateServiceById = function (serviceId, service) {
+    var reqUpdateServiceById = function (serviceId, service) {
         return $http.put('/api/services/' + serviceId, service, {
             headers : {
                 Authorization : 'Bearer ' + authentication.getToken()
             }
+        }).success(function (data) {
+            console.log(data);
         });
     };
     var deleteServiceById = function (serviceId) {
@@ -102,6 +104,37 @@ function services($http, authentication){
         return allServiceByUsername;
     };
 
+    var formattedError = function (vm) {
+        return function (err) {
+            console.log(JSON.stringify(err, null, 4));
+            if(err.message !== "User validation failed" ){
+                message.push(err.message);
+                return;
+            }
+            if(err.message === "User validation failed"){
+                var allErrors = err.errors;
+                for(var prop in allErrors){
+                    var currentError = allErrors[prop];
+                    for (var propError in currentError){
+                        if(propError == "message"){
+                            vm.formErrorAddService.push(currentError[propError]);
+                        }
+                    }
+                }
+                return;
+            }
+        };
+    };
+    var formattedErrorArray = function (vm) {
+       return function () {
+            var errorString = "";
+            for (var i = 0; i < vm.formErrorAddService.length; i++){
+                errorString += vm.formErrorAddService[i] + '<br>';
+            }
+            return errorString;
+       }
+    };
+
 
 
     return {
@@ -109,12 +142,14 @@ function services($http, authentication){
         getAllServices : getAllServices,
         getOneServiceById : getOneServiceById,
         getAllServiceByUsername : getAllServiceByUsername,
-        updateServiceById: updateServiceById,
+        reqUpdateServiceById: reqUpdateServiceById,
         deleteServiceById : deleteServiceById,
         reqGetAllServices : reqGetAllServices,
         optionValue : optionValue,
         setSubCategory : setSubCategory,
         reqGetOneServiceById : reqGetOneServiceById,
-        reqGetAllServiceByUsername : reqGetAllServiceByUsername
+        reqGetAllServiceByUsername : reqGetAllServiceByUsername,
+        formattedError : formattedError,
+        formattedErrorArray : formattedErrorArray
     }
 }

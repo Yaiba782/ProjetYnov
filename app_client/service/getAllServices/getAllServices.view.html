@@ -71,11 +71,11 @@
 
                                     <div class="content">
                                         <div class="header">
-                                            <h5 class="motto">{{service.subCategory}}</h5>
+                                            <h5 class="motto">{{service.category}}</h5>
                                         </div>
                                         <div class="main">
                                             <h4 class="text-center">{{service.titre}}</h4>
-                                            <p>{{service.shortDescription}}</p>
+                                            <p>{{service.subCategory}}</p>
                                             <h4 class="text-center">Date :</h4>
                                             <p>{{service.dateService | date:'medium'}}</p>
                                             <a href="#/getOneServiceById?id={{service._id}}"><button type="button" class="btn btn-secondary">voir le service</button></a>
