@@ -13,10 +13,10 @@ function ctrlGetAllServices($location, services, authentication, $scope){
     vm.currentCategory = "";
     vm.errorGetAllServices ="";
     vm.errorGetAllServicesByUsername = "";
-    vm.servicesArray = null;
-    vm.allServices = null;
+    vm.servicesArray = [];
+    vm.allServices = [];
     vm.filterServices ="";
-    vm.myServices = null;
+    vm.myServices = [];
     services
         .reqGetAllServices()
         .error(function (err) {
@@ -54,7 +54,10 @@ function ctrlGetAllServices($location, services, authentication, $scope){
     vm.getMyService = function () {
         if(vm.myServices.length > 0){
             vm.servicesArray = vm.myServices;
+            return true;
         }
+        alert("vous ne possédez pas de services");
+        return false;
 
 
     };

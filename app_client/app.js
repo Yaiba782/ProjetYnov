@@ -30,6 +30,7 @@ function config ($routeProvider){
             controller : 'ctrlGetOneServiceById',
             controllerAs :'vm'
         })
+       
         .otherwise({redirectTo : '/'});
 }
 
