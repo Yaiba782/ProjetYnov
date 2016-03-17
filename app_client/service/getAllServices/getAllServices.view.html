@@ -1,0 +1,99 @@
+<div class="wrapper clearfix">
+    <a href="#" class="menu-link">Menu</a>
+    <nav role="navigation" class="mobile-menu">
+        <ul>
+            <li><a href="#/">Accueil</a></li>
+            <li><a href="#/">Rechercher</a></li>
+            <li><a href="#/">Concept</a></li>
+            <li><a href="#/registerLogin">Connexion / Inscription</a></li>
+        </ul>
+    </nav>
+    <navigation-pc content="vm.navigationPc"></navigation-pc>
+    <header-generic></header-generic>
+    <div class="content">
+        <div class="categorie-position">
+
+            <select name="select" id="Catégorie" class="select"
+                    ng-model="vm.currentCategory" ng-click="vm.setSubCategory(vm.currentCategory)" required>
+                <option value="{{vm.optionValue.aideMenager}}">Aide-ménagère</option>
+                <option value="{{vm.optionValue.jardinage}}">Jardinage</option>
+                <option value="{{vm.optionValue.informatique}}">Informatique</option>
+                <option value="{{vm.optionValue.bienEtre}}">Bien-être</option>
+                <option value="{{vm.optionValue.coursSoutienScolaire}}">Cours / Soutien scolaire</option>
+                <option value="{{vm.optionValue.bricolage}}">Bricolage</option>
+                <option value="{{vm.optionValue.demenagement}}">Déménagement</option>
+                <option value="{{vm.optionValue.automobile}}">Automobile</option>
+                <option value="{{vm.optionValue.autres}}">Autres</option>
+                <option value="{{vm.optionValue.administratif}}">Administratif</option>
+            </select>
+            <select ng-model="vm.currentSubCategory" ng-click="vm.setFilterServices(vm.currentSubCategory)">
+                <option ng-repeat="subCategory in vm.subCategoryArray track by $index" value="{{subCategory}}">{{subCategory}}</option>
+            </select>
+            <div> <button type="button" class="btn btn-secondary" ng-click="vm.getMyService()">afficher mes services</button></div>
+
+            <div><button type="button" class="btn btn-secondary" ng-click="vm.getAllServices()">afficher tous les services</button></div>
+
+        </div>
+        <!-- begin .why-attend -->
+        <section class="why-attend">
+            <div class="block">
+                <h2>
+                    <input type="search" ng-model="vm.filterServices" placeholder="recherche service" aria-label="filter friends" />
+                </h2>
+                <div class="grid4 clearfix example-animate-container">
+
+                    <!---------------------------------------------------------------------->
+                    <div class="col animate-repeat" ng-repeat="service in vm.servicesArray
+                    | orderBy : services.dateService | filter: vm.filterServices as results track by $index ">
+
+                        <div class="card-container">
+                            <div class="card">
+                                <div class="front">
+                                    <div class="cover">
+                                       <h3>{{service.category}}</h3>
+                                    </div>
+                                    <div class="user">
+                                        <img class="img-circle" src="/lib/img/plugins.png"/>
+                                    </div>
+                                    <div class="content">
+                                        <div class="main">
+                                            <h3 class="name">{{service.titre}}</h3>
+                                            <h5><i class="fa fa-map-marker fa-fw text-muted"></i>{{service.addressRequest[0].city}} {{service.addressRequest[0].zipCode}}</h5>
+                                            <h5><i class="fa fa-user fa-fw text-muted"></i>{{service.username}}</h5>
+                                            <h5><i class="fa fa-calendar fa-fw text-muted"></i>{{service.dateService | date:'medium'}}</h5>
+                                            <h5><i class="fa fa-money fa-fw text-muted"></i>{{service.pointNumber}}</h5>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- end front panel -->
+                                <div class="back">
+
+                                    <div class="content">
+                                        <div class="header">
+                                            <h5 class="motto">{{service.subCategory}}</h5>
+                                        </div>
+                                        <div class="main">
+                                            <h4 class="text-center">{{service.titre}}</h4>
+                                            <p>{{service.shortDescription}}</p>
+                                            <h4 class="text-center">Date :</h4>
+                                            <p>{{service.dateService | date:'medium'}}</p>
+                                            <a href="#/getOneServiceById?id={{service._id}}"><button type="button" class="btn btn-secondary">voir le service</button></a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </section>
+    </div>
+    <footer-generic></footer-generic>
+
+</div>

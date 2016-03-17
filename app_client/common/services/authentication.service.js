@@ -56,8 +56,7 @@ function authentication($window, $http){
         }
     };
 
-
-        return {
+    return {
             saveToken : saveToken,
             getToken : getToken,
             register : register,

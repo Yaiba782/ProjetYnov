@@ -1,0 +1,93 @@
+<div class="wrapper clearfix">
+    <a href="#" class="menu-link">Menu</a>
+    <nav role="navigation" class="mobile-menu">
+        <ul>
+            <li><a href="#/">Accueil</a></li>
+            <li><a href="#/">Rechercher</a></li>
+            <li><a href="#/">Concept</a></li>
+            <li><a href="#/registerLogin">Connexion / Inscription</a></li>
+        </ul>
+    </nav>
+    <navigation-pc content="vm.navigationPc"></navigation-pc>
+    <header-generic></header-generic>
+
+    <div class="content">
+        <!-- begin .why-attend -->
+        <section class="why-attend">
+            <div class="block">
+
+                <div>
+                    <div class="grid3 clearfix">
+                        <div class=" col-xs-offset-2 col-xs-9 ">
+                            <h1>{{vm.serviceById.titre}}</h1>
+                            <h2>{{vm.serviceById.pointNumber}}<p><i class="fa fa-money fa-fw text-muted"></i></p></h2>
+                            <h2></h2>
+                            <p>{{vm.serviceById.detailedDescription}}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <hr>
+            <div class="block">
+
+                <div class="col-xs-4">
+                    <div class="grid3 clearfix">
+                        <div class=" col-xs-offset-2 col-xs-9">
+                            <p><i class="fa fa-map-marker fa-fw text-muted"></i>
+                                {{vm.serviceById.addressRequest[0].address}}
+                                 </p>
+                            <p>{{vm.serviceById.addressRequest[0].zipCode}}</p>
+                            <p>{{vm.serviceById.addressRequest[0].city}}</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xs-4">
+                    <div class="grid3 clearfix">
+                        <div class=" col-xs-offset-2 col-xs-9">
+                            <p><i class="fa fa-user fa-fw text-muted"></i>
+                                {{vm.serviceById.username}}</p>
+                            <p><i class="fa fa-envelope fa-fw text-muted"></i>{{vm.serviceById.email}} </p>
+                            <p><i class="fa fa-phone fa-fw text-muted"></i>{{vm.serviceById.phoneNumber[0].mobilNumber}} </p>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xs-4">
+                    <div class="grid3 clearfix">
+                        <div class=" col-xs-offset-2 col-xs-9">
+                            <p><i class="fa fa-bars fa-fw text-muted"></i>
+                                {{vm.serviceById.category}}</p>
+                            <p><i class="fa fa-bars fa-fw text-muted"></i>{{vm.serviceById.subCategory}} </p>
+                            <p><i class="fa fa-calendar fa-fw text-muted"></i>{{vm.serviceById.dateService | date:'medium'}} </p>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div ng-if="vm.isMyService">
+                    <button type="button" class="btn btn-secondary">modifier</button>
+                    <button type="button" class="btn btn-warning">suprimer</button>
+
+                </div>
+            </div>
+        </section>
+        <!-- end .why-attend -->
+        <!-- begin .sponsors -->
+        <section class="sponsors">
+            <div class="block">
+                <h3>Nos partenaires</h3>
+                <ul class="regular-sponsors">
+                    <li><a href="#"><img src="/lib/img/logo-Ynov.png" alt="Ynov"></a></li>
+                </ul>
+                <a href="#" class="become-sponsor">Devenir partenaire</a>
+            </div>
+        </section>
+        <!-- end .sponsors -->
+    </div>
+    <footer-generic></footer-generic>
+
+</div>

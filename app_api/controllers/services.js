@@ -11,7 +11,7 @@ var findIndexService = require("../../lib/func9FindIndexService");
 var createObjectService = require("../../lib/func10CreateObjectService");
 
 module.exports.addService = function(req, res){
-    getAuthor(req, res, function (req, res, username) {
+    getAuthor(req, res, function (req, res, username, email) {
         if(!req.body.titre || !req.body.category || !req.body.subCategory || !req.body.shortDescription
             || !req.body.detailedDescription || !req.body.address || !req.body.city || !req.body.zipCode
             || !req.body.pointNumber){
@@ -26,8 +26,8 @@ module.exports.addService = function(req, res){
                 return;
             }
             if(user){
-                req.body.username = username;
-                var service = createObjectService(req.body);
+
+                var service = createObjectService(req.body, username, email);
                 user.services.push(service);
                 user.save(function (err) {
                     if(err){
@@ -152,7 +152,7 @@ module.exports.getAllServicesByUsername = function (req, res) {
 
 };
 module.exports.updateServiceById = function (req, res) {
-    getAuthor(req, res, function (req, res, username) {
+    getAuthor(req, res, function (req, res, username, email) {
         if(!req.params.serviceId || !username){
             sendJsonResponse(res, 404, {
                 "message" : "service pas trouvé"
@@ -188,7 +188,8 @@ module.exports.updateServiceById = function (req, res) {
                 }
                 if(indexService !== null){
                     var elementRemoved = user.services.splice(indexService, 1);
-                    var service = createObjectService(req.body);
+                    var service = createObjectService(req.body, username, email);
+
 
                     user.services.push(service);
                     user.save(function (err, user) {

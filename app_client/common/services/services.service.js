@@ -7,6 +7,53 @@ angular
     services.$inject = ['$http', 'authentication'];
 
 function services($http, authentication){
+    var allServices = null;
+    var serviceById = null;
+    var allServiceByUsername;
+    var optionValue = {
+        aideMenager :  [ 'Aide-ménagère', 'Repassage', 'Vaisselle', 'Nettoyage', 'Nettoyage', 'Cuissine', 'Autres'],
+        jardinage : ['Jardinage', 'Pelouse', 'Entretien', 'Autres'],
+        informatique : ['Informatique', 'Installation de matérie', 'Dépannage', 'Soutient informatique', 'Autres'],
+        bienEtre : ['Bien-être','Coiffure', 'Manucure', 'Massage', 'Autres'],
+        coursSoutienScolaire : ['Cours / Soutien scolaire', 'Sport', 'Cuisine', 'Décoration', 'Musique', 'Langues', 'Matières scientifiques', 'Autres'],
+        bricolage : ['Bricolage', 'Peinture', 'Monter un meuble en kit', 'Réparations', 'Petits travaux', 'Autres'],
+        demenagement : ['Déménagement','Aide au déménagement', 'Autres'],
+        automobile : ['Automobile', 'Vidange', 'Nettoyage', 'Autres'],
+        autres : ['Autres', 'Administratif', 'Autres'],
+        administratif : ['Autres', 'Aide administrative', 'Autres']
+    };
+   var setSubCategory =  function (currentCategory, vm) {
+
+
+        var subCategoryArray = currentCategory.split('"');
+
+        for (var i = 0; i < subCategoryArray.length; i++){
+            if(subCategoryArray[i] == "[" || subCategoryArray[i] == "," || subCategoryArray[i] == "]" ){
+                subCategoryArray.splice(i, 1);
+            }
+        }
+        vm.category = subCategoryArray.shift();
+
+
+        vm.subCategoryArray = subCategoryArray;
+
+        return true;
+    };
+
+
+    var reqGetAllServices = function () {
+        return $http.get('/api/services').success(function (data) {
+            saveAllServices(data);
+
+        });
+    };
+    var saveAllServices = function (allServicesSave) {
+        allServices = allServicesSave;
+    };
+    var getAllServices = function () {
+      return allServices;
+    };
+
     var addService = function (service) {
         return $http.post('/api/services', service, {
             headers : {
@@ -16,14 +63,17 @@ function services($http, authentication){
             return;
         });
     };
-    var getAllServices = function () {
-        return $http.get('/api/services');
+
+    var reqGetOneServiceById = function (serviceId) {
+        return $http.get('/api/services/' + serviceId + '/getOneServiceById').success(function (data) {
+            saveServiceById(data);
+        });
     };
-    var getOneServiceById = function (serviceId) {
-        return $http.get('/api/services/' + serviceId + '/getOneServiceById');
-    };
-    var getAllServiceByUsername = function (username) {
-        return $http.get('/api/services/' + username + '/getAllServiceByUsername');
+    var reqGetAllServiceByUsername = function (username) {
+        return $http.get('/api/services/' + username + '/getAllServicesByUsername').success(function (data) {
+
+            saveAllServiceByUsername(data);
+        });
     };
     var updateServiceById = function (serviceId, service) {
         return $http.put('/api/services/' + serviceId, service, {
@@ -39,6 +89,20 @@ function services($http, authentication){
             }
         });
     };
+    var saveServiceById = function (saveServiceById) {
+        serviceById = saveServiceById;
+    };
+    var getOneServiceById= function () {
+        return serviceById;
+    };
+    var saveAllServiceByUsername = function (data) {
+        allServiceByUsername = data;
+    };
+    var getAllServiceByUsername = function () {
+        return allServiceByUsername;
+    };
+
+
 
     return {
         addService : addService,
@@ -46,7 +110,11 @@ function services($http, authentication){
         getOneServiceById : getOneServiceById,
         getAllServiceByUsername : getAllServiceByUsername,
         updateServiceById: updateServiceById,
-        deleteServiceById : deleteServiceById
-
+        deleteServiceById : deleteServiceById,
+        reqGetAllServices : reqGetAllServices,
+        optionValue : optionValue,
+        setSubCategory : setSubCategory,
+        reqGetOneServiceById : reqGetOneServiceById,
+        reqGetAllServiceByUsername : reqGetAllServiceByUsername
     }
 }

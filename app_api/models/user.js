@@ -91,7 +91,11 @@ var serviceSchema = new mongoose.Schema({
     },
     username : {
         type : String
+    },
+    email: {
+        type : String
     }
+
 });
 mongoose.model('Service', serviceSchema, 'Services');
 
