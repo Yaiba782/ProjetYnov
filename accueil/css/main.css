@@ -1804,4 +1804,8 @@ form#contact-form input[type="submit"] {
     padding-bottom: 31%;
     margin-bottom: -22%;
 }
+
+button.btn.btn-info>a {
+    color: #fff !important;
+    text-transform: inherit;
 }
