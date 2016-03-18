@@ -23,7 +23,7 @@
                 <div>
                     <label class="text" for="titre">Titre de l'annonce :<b class="ast">*</b></label>
                     <input type="text" placeholder="Titre" class="input" id="titre"
-                           ng-model="vm.addService.titre"  ng-minlength="5" ng-maxlength="35" required>
+                           ng-model="vm.addService.titre"  required>
                 </div>
                 <div class="section">
                     <label class="text" for="Catégorie">Catégorie de l'annonce :<b class="ast">*</b></label>
@@ -55,14 +55,14 @@
                     <label class="text" for="descriptioncourte">Description courte de l'annonce :<b class="ast">*</b></label>
                     <textarea  class="descriptioncourte" name="Description courte" class="input" id="descriptioncourte"
                                cols="30" rows="2" placeholder="Description courte"
-                               ng-model="vm.addService.shortDescription"  ng-minlength="10" ng-maxlength="100" required></textarea>
+                               ng-model="vm.addService.shortDescription"  required></textarea>
 
                 </div>
                 <div class="section">
                     <label class="text" for="descriptiondétaillée">Description détaillée de l'annonce :</label>
                     <textarea class="descriptiondetaille" name="Description détaillée" class="input" id="descriptiondétaillée"
                               cols="30" rows="6" placeholder="Description détaillée"
-                    ng-model="vm.addService.detailedDescription" ng-minlength="10"></textarea>
+                    ng-model="vm.addService.detailedDescription" ></textarea>
                 </div>
                 <div class="section">
                     <label class="text" >Adresse du lieu de demande de service :<b class="ast">*</b></label>
@@ -73,7 +73,7 @@
                 <div class="section">
                     <label class="text" >Numéro de téléphone mobile :<b class="ast">*</b></label>
                     <input type="text" placeholder="Téléphone" class="input"
-                           ng-model="vm.addService.mobilNumber"   ng-minlength="10" ng-maxlength="10">
+                           ng-model="vm.addService.mobilNumber"  >
                 </div>
                 <div class="section">
                     <label class="text">Nombre de points donnés pour le service :<b class="ast">*</b></label>
