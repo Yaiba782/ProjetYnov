@@ -50,14 +50,14 @@
                             <div class="card">
                                 <div class="front">
                                     <div class="cover">
-                                       <h3>{{service.category}}</h3>
+                                       <h3>{{service.titre | characters:19 }}</h3>
                                     </div>
                                     <div class="user">
                                         <img class="img-circle" src="/lib/img/plugins.png"/>
                                     </div>
                                     <div class="content">
                                         <div class="main">
-                                            <h3 class="name">{{service.titre}}</h3>
+                                            <h5 class="name">{{service.category | characters:19 }}</h5>
                                             <h5><i class="fa fa-map-marker fa-fw text-muted"></i>{{service.addressRequest[0].city}} {{service.addressRequest[0].zipCode}}</h5>
                                             <h5><i class="fa fa-user fa-fw text-muted"></i>{{service.username}}</h5>
                                             <h5><i class="fa fa-calendar fa-fw text-muted"></i>{{service.dateService | date:'medium'}}</h5>
@@ -68,14 +68,13 @@
                                 </div>
                                 <!-- end front panel -->
                                 <div class="back">
-
                                     <div class="content">
                                         <div class="header">
                                             <h5 class="motto">{{service.category}}</h5>
                                         </div>
                                         <div class="main">
                                             <h4 class="text-center">{{service.titre}}</h4>
-                                            <p>{{service.subCategory}}</p>
+                                            <div style="line-height: 3em; height: 3em;  overflow: hidden; ">{{service.shortDescription |  characters:19 }}</div>
                                             <h4 class="text-center">Date :</h4>
                                             <p>{{service.dateService | date:'medium'}}</p>
                                             <a href="#/getOneServiceById?id={{service._id}}"><button type="button" class="btn btn-secondary">voir le service</button></a>
@@ -92,6 +91,7 @@
                 </div>
                 <hr>
             </div>
+
         </section>
     </div>
     <footer-generic></footer-generic>

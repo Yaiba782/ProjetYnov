@@ -10,13 +10,17 @@ ctrlAddService.$inject = ['$location', 'services', 'authentication', '$ngBootbox
 function ctrlAddService($location, services, authentication, $ngBootbox){
 
     var vm = this;
+
+
+
+
     vm.isLoggedIn = authentication.isLoggedIn();
-    vm.textIfNotLogged = "Veuillez vous connecter pour publier une annonce";
+    vm.textIfNotLogged = "Veuillez vous connecter pour publier un service";
     vm.titrePage = "Création service";
     vm.textButtonSubmit = "Publier";
     vm.currentCategory ="";
     vm.subCategoryArray = null;
-    vm.formErrorAddService = [];
+    vm.formError = [];
     vm.category = "";
     vm.currentSubCategory = "";
     vm.subCategory = "";
@@ -48,14 +52,13 @@ function ctrlAddService($location, services, authentication, $ngBootbox){
 
     vm.onSubmitAddService = function () {
         vm.doAddService = function () {
-            vm.formErrorAddService =[];
+            vm.formError =[];
             services
                 .addService(vm.addService)
                 .error(function (err) {
                     formattedError(err);
                     var stringError = formattedErrorArray();
                     $ngBootbox.alert(stringError);
-
                 })
                 .then(function () {
                         $ngBootbox.alert('Votre service à bien été crée')
@@ -64,12 +67,11 @@ function ctrlAddService($location, services, authentication, $ngBootbox){
                             });
                 });
         };
-        vm.formErrorAddService =[];
+        vm.formError =[];
         if(!vm.addService.titre || !vm.category || !vm.subCategory || !vm.addService.shortDescription
             || !vm.addService.detailedDescription || !vm.addService.address || !vm.addService.city
         || !vm.addService.zipCode || !vm.addService.mobilNumber || !vm.addService.pointNumber){
-            vm.formErrorAddService.push("veuillez saisir tout les champs");
-            formattedError(err);
+            vm.formError.push("veuillez saisir tout les champs");
             var stringError = formattedErrorArray();
             $ngBootbox.alert(stringError);
             return false;
@@ -83,5 +85,16 @@ function ctrlAddService($location, services, authentication, $ngBootbox){
     var formattedError = services.formattedError(vm);
 
     var formattedErrorArray = services.formattedErrorArray(vm);
+
+    ////////////////////////////////////////////////////////////for navigation directive
+    vm.navigationPc = {};
+    vm.navigationPc.isLoggedIn = authentication.isLoggedIn();
+    vm.authentication = authentication;
+    vm.$ngBootbox = $ngBootbox;
+    vm.$location = $location;
+    vm.navigationPc.logout = authentication.alertLogout(vm);
+    ////////////////////////////////////////////////////////////for navigation directive
+
+
 
 }

@@ -56,6 +56,17 @@ function authentication($window, $http){
         }
     };
 
+    var alertLogout = function (vm) {
+        return function () {
+            vm.authentication.logout();
+            vm.$ngBootbox.alert("Déconnexion réussie merci pour votre confiance à bientôt")
+                .then(function () {
+                    vm.$location.path('/registerLogin');
+                    return;
+                });
+        }
+    };
+
     return {
             saveToken : saveToken,
             getToken : getToken,
@@ -63,6 +74,7 @@ function authentication($window, $http){
             login : login,
             logout : logout,
             isLoggedIn : isLoggedIn,
-            currentUser: currentUser
-        }
+            currentUser: currentUser,
+            alertLogout : alertLogout
     }
+}

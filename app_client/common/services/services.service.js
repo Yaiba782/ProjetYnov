@@ -84,11 +84,13 @@ function services($http, authentication){
             console.log(data);
         });
     };
-    var deleteServiceById = function (serviceId) {
+    var reqDeleteServiceById = function (serviceId) {
         return $http.delete('/api/services/' + serviceId, {
             headers : {
                 Authorization : 'Bearer ' + authentication.getToken()
             }
+        }).success(function(){
+            return;
         });
     };
     var saveServiceById = function (saveServiceById) {
@@ -108,7 +110,7 @@ function services($http, authentication){
         return function (err) {
             console.log(JSON.stringify(err, null, 4));
             if(err.message !== "User validation failed" ){
-                message.push(err.message);
+                vm.formError.push(err.message);
                 return;
             }
             if(err.message === "User validation failed"){
@@ -117,7 +119,7 @@ function services($http, authentication){
                     var currentError = allErrors[prop];
                     for (var propError in currentError){
                         if(propError == "message"){
-                            vm.formErrorAddService.push(currentError[propError]);
+                            vm.formError.push(currentError[propError]);
                         }
                     }
                 }
@@ -128,9 +130,10 @@ function services($http, authentication){
     var formattedErrorArray = function (vm) {
        return function () {
             var errorString = "";
-            for (var i = 0; i < vm.formErrorAddService.length; i++){
-                errorString += vm.formErrorAddService[i] + '<br>';
+            for (var i = 0; i < vm.formError.length; i++){
+                errorString += vm.formError[i] + '<br>';
             }
+           vm.formError = [];
             return errorString;
        }
     };
@@ -143,7 +146,7 @@ function services($http, authentication){
         getOneServiceById : getOneServiceById,
         getAllServiceByUsername : getAllServiceByUsername,
         reqUpdateServiceById: reqUpdateServiceById,
-        deleteServiceById : deleteServiceById,
+        reqDeleteServiceById  : reqDeleteServiceById,
         reqGetAllServices : reqGetAllServices,
         optionValue : optionValue,
         setSubCategory : setSubCategory,

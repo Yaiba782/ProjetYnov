@@ -17,7 +17,7 @@ function ctrlUpdateServiceById($location, services, authentication,  $ngBootbox)
 
     vm.currentCategory ="";
     vm.subCategoryArray = null;
-    vm.formErrorAddService = "";
+    vm.formError = [];
     vm.category = "";
     vm.currentSubCategory = "";
     vm.subCategory = "";
@@ -100,7 +100,7 @@ function ctrlUpdateServiceById($location, services, authentication,  $ngBootbox)
     //updateServiceById
     vm.onSubmitAddService = function () {
         vm.doUpdateService = function () {
-            vm.formErrorAddService ="";
+            vm.formError= [];
             services
                 .reqUpdateServiceById(vm.addService._id, vm.addService)
                 .error(function (err) {
@@ -116,11 +116,13 @@ function ctrlUpdateServiceById($location, services, authentication,  $ngBootbox)
                         });
                 });
         };
-        vm.formErrorAddService ="";
+        vm.formError= [];
         if(!vm.addService.titre || !vm.category || !vm.subCategory || !vm.addService.shortDescription
             || !vm.addService.detailedDescription || !vm.addService.address || !vm.addService.city
             || !vm.addService.zipCode || !vm.addService.mobilNumber || !vm.addService.pointNumber){
-            vm.formErrorAddService = "veuillez saisir tout les champs";
+            vm.formError.push("veuillez saisir tout les champs");
+            var stringError = formattedErrorArray();
+            $ngBootbox.alert(stringError);
             return false;
         }
         vm.addService.subCategory = vm.subCategory;
@@ -132,4 +134,13 @@ function ctrlUpdateServiceById($location, services, authentication,  $ngBootbox)
     var formattedError = services.formattedError(vm);
 
     var formattedErrorArray = services.formattedErrorArray(vm);
+
+    ////////////////////////////////////////////////////////////for navigation directive
+    vm.navigationPc = {};
+    vm.navigationPc.isLoggedIn = authentication.isLoggedIn();
+    vm.authentication = authentication;
+    vm.$ngBootbox = $ngBootbox;
+    vm.$location = $location;
+    vm.navigationPc.logout = authentication.alertLogout(vm);
+    ////////////////////////////////////////////////////////////for navigation directive
 }

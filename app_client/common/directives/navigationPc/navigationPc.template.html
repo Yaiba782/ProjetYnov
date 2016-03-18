@@ -4,15 +4,23 @@
     <nav role="navigation" style="margin-right: 0px;" class="nav-left">
         <ul>
             <li><a href="#/">Accueil</a></li>
-            <li><a href="#/">Rechercher</a></li>
+            <li><a href="#/getAllServices">Rechercher</a></li>
+            <li><a href="#/addService">ajouter un service</a></li>
         </ul>
     </nav>
-    <div style="-webkit-transform: scale(0); display: none;" class="top-logo"><a href="#">ServPoint<span>Services describe</span></a></div>
+    <!--<div class="top-logo" style="-webkit-transform: scale(0); display: none;">
+        <a href="#/">ServPoint<span>Services 8===o</span></a>
+    </div>-->
+
     <nav role="navigation" style="margin-left: 0px;" class="nav-right">
         <ul>
-            <li><a href="#/">Concept</a></li>
-            <li ng-hide="content.isConnected"><a href="#/registerLogin">Connexion / Inscription</a></li>
-            <!--<li ng-hide="!content.isConnected"><a href="#/connexion">Déconection</a></li>-->
+
+            <li ng-hide="navigationPc.isLoggedIn"><a href="#/registerLogin">Connexion / Inscription</a></li>
+
+            <li ng-hide="!navigationPc.isLoggedIn" ><a href="#/myProfile">Mon profil</a></li>
+
+            <li ng-hide="!navigationPc.isLoggedIn" ng-click="navigationPc.logout()"><a href="">Déconnexion</a></li>
+
         </ul>
     </nav>
 </div>

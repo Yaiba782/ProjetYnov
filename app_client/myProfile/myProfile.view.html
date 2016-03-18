@@ -1,0 +1,51 @@
+<div class="wrapper clearfix">
+    <div>
+        <a href="#" class="menu-link">Menu</a>
+        <nav role="navigation" class="mobile-menu">
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="rechercher.html">Rechercher</a></li>
+                <li><a href="#">Concept</a></li>
+                <li><a href="#">Connexion / Inscription</a></li>
+            </ul>
+        </nav>
+    </div>
+    <navigation-pc content="vm.navigationPc"></navigation-pc>
+
+    <header-generic></header-generic>
+
+    <div class="content">
+
+        <!-- begin .why-attend -->
+        <section class="why-attend">
+            <h2>Profil de {{vm.user.lastName}} {{vm.user.firstName}}</h2>
+            <div class="container_photo">
+                <div class="w3-card-8 w3-dark-grey w3-margin" style="width:20%">
+                    <div class="w3-container" style="padding: 3em 20px">
+                        <img src="/lib/img/profile.png" alt="Avatar" style="width:50%; margin-left:50px;">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="renseignement col-md-3" style="margin-right:1450px; margin-top:-188px;margin-left:310px; padding-right:90px; border-radius: 5px 10px 0 5px">
+                <div class="panel panel-primary" style="border-color:#FFFFFF"><h4>Prénom: {{vm.user.firstName}}</h4></div>
+                <div class="panel panel-success" style="border-color:#FFFFFF"><h4>Nom: {{vm.user.lastName}}</h4></div>
+                <div class="panel panel-info" style="border-color:#FFFFFF"><h4>Date de naissance: {{vm.user.birthDate | date:"dd/MM/yyyy"}}</h4></div>
+            </div>
+
+            <div class="renseignement1 col-md-3" style="margin-left:750px; margin-top:-186px; border-radius: 5px 10px 0 5px">
+                <div class="panel panel-danger" style="border-color:#FFFFFF"><h4>Date d'inscription: {{vm.user.registrationDate | date:"dd/MM/yyyy 'à' h:mma" }}</h4></div>
+                <a href="#/getAllServices"><button class="btn btn-success" type="button">Voir les services proposés</button></a>
+            </div>
+
+            <br>
+
+        </section>
+
+        <!-- end .why-attend -->
+        <footer-generic></footer-generic>
+
+    </div>
+
+</div>

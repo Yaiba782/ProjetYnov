@@ -4,10 +4,11 @@
 angular
     .module('pointService')
     .controller('ctrlRegisterLogin', ctrlRegisterLogin);
-ctrlRegisterLogin.$inject = ['$location', 'authentication'];
+ctrlRegisterLogin.$inject = ['$location', 'authentication', 'services', '$ngBootbox'];
 
-function ctrlRegisterLogin($location, authentication){
+function ctrlRegisterLogin($location, authentication, services, $ngBootbox){
     var vm = this;
+    vm.formError = [];
 
     vm.login = {
         username : "",
@@ -30,22 +31,29 @@ function ctrlRegisterLogin($location, authentication){
 
     };
     vm.onSubmitLogin = function () {
-        vm.formErrorLogin = "";
+        vm.formErrorLogin =  [];
         vm.doLogin = function () {
-            vm.formErrorLogin = "";
+            vm.formErrorLogin = [];
             authentication
                 .login(vm.login)
                 .error(function (err) {
-                    vm.formErrorLogin = err;
+                    formattedError(err);
+                    var stringError = formattedErrorArray();
+                    $ngBootbox.alert(stringError);
                 })
                 .then(function () {
+                    $ngBootbox.alert('connexion réussie')
+                        .then(function() {
+                            $location.path('/getAllServices');
+                        });
 
-                    $location.path('/');
                 });
 
         };
         if(!vm.login.username|| !vm.login.password){
-            vm.formErrorLogin = "Tout les champs sont obligatoire";
+            vm.formError.push("Tout les champs sont obligatoire");
+            var stringError = formattedErrorArray();
+            $ngBootbox.alert(stringError);
             return false;
         }
         if(vm.login.email || vm.login.password){
@@ -54,18 +62,26 @@ function ctrlRegisterLogin($location, authentication){
     };
 
     vm.onSubmitRegister = function () {
-        vm.formErrorRegister = "";
+        vm.formError = [];
 
         vm.doRegister = function () {
-            vm.formErrorRegister = "";
+            vm.formError = [];
             authentication
                 .register(vm.register)
                 .error(function (err) {
-                    vm.formErrorRegister =err;
+                    formattedError(err);
+                    var stringError = formattedErrorArray();
+                    $ngBootbox.alert(stringError);
+
                 })
                 .then(function () {
+                    $ngBootbox.alert('inscription réussie, vous êtes connecté')
+                        .then(function() {
+                            $location.path('/getAllServices');
+                            return;
+                        });
 
-                    $location.path('/');
+
                 });
 
         };
@@ -73,16 +89,33 @@ function ctrlRegisterLogin($location, authentication){
         if(!vm.register.lastName || !vm.register.firstName || !vm.register.email || !vm.register.password
             || !vm.register.mobilNumber || !vm.register.fixNumber || !vm.register.address || !vm.register.zipCode
             || !vm.register.city || !vm.register.username || !vm.register.birthDate){
-            vm.formErrorRegister = "Tout les champs sont obligatoire";
+            vm.formError.push("Tout les champs sont obligatoire");
+            var stringError = formattedErrorArray();
+            $ngBootbox.alert(stringError);
+
             return false;
 
         }
         if(vm.checkPasswordRegister != vm.register.password){
-            vm.formErrorRegister = "veuillez saisir le même mot de passe dans les 2 champs pour la vérification";
+            vm.formError.push("veuillez saisir le même mot de passe dans les 2 champs pour la vérification");
+            stringError = formattedErrorArray();
+            $ngBootbox.alert(stringError);
             return false;
         }
         vm.doRegister();
         return true;
 
-    }
+    };
+    var formattedError = services.formattedError(vm);
+
+    var formattedErrorArray = services.formattedErrorArray(vm);
+
+    ////////////////////////////////////////////////////////////for navigation directive
+    vm.navigationPc = {};
+    vm.navigationPc.isLoggedIn = authentication.isLoggedIn();
+    vm.authentication = authentication;
+    vm.$ngBootbox = $ngBootbox;
+    vm.$location = $location;
+    vm.navigationPc.logout = authentication.alertLogout(vm);
+    ////////////////////////////////////////////////////////////for navigation directive
 }

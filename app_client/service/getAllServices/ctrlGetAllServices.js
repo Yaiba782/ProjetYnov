@@ -5,9 +5,9 @@ angular
     .module('pointService')
     .controller('ctrlGetAllServices', ctrlGetAllServices);
 
-ctrlGetAllServices.$inject = ['$location', 'services', 'authentication', '$scope'];
+ctrlGetAllServices.$inject = ['$location', 'services', 'authentication', '$ngBootbox'];
 
-function ctrlGetAllServices($location, services, authentication, $scope){
+function ctrlGetAllServices($location, services, authentication, $ngBootbox ){
     var vm = this;
     var currentUser = authentication.currentUser();
     vm.currentCategory = "";
@@ -56,10 +56,8 @@ function ctrlGetAllServices($location, services, authentication, $scope){
             vm.servicesArray = vm.myServices;
             return true;
         }
-        alert("vous ne possédez pas de services");
+        $ngBootbox.alert("vous ne possédez pas de services");
         return false;
-
-
     };
     vm.getAllServices = function () {
         if(vm.allServices.length > 0){
@@ -67,6 +65,17 @@ function ctrlGetAllServices($location, services, authentication, $scope){
             return;
         }
 
-    }
+    };
+
+
+    ////////////////////////////////////////////////////////////for navigation directive
+    vm.navigationPc = {};
+    vm.navigationPc.isLoggedIn = authentication.isLoggedIn();
+    vm.authentication = authentication;
+    vm.$ngBootbox = $ngBootbox;
+    vm.$location = $location;
+    vm.navigationPc.logout = authentication.alertLogout(vm);
+    ////////////////////////////////////////////////////////////for navigation directive
+
 
 }

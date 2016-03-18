@@ -12,7 +12,7 @@ function navigationPc(){
 
         templateUrl : '/common/directives/navigationPc/navigationPc.template.html',
         scope : {
-            content : '=content'
+            navigationPc : '=content'
         }
     };
 }

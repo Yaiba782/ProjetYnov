@@ -70,7 +70,7 @@
 
                 <div ng-if="vm.isMyService">
                     <a href="#/updateServiceById?id={{vm.serviceById._id}}"><button type="button" class="btn btn-secondary">modifier</button></a>
-                    <button type="button" class="btn btn-warning">suprimer</button>
+                    <button type="button" class="btn btn-warning" ng-click="vm.deleteMyService()">suprimer</button>
 
                 </div>
             </div>

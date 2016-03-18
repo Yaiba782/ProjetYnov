@@ -1,7 +1,7 @@
 /**
  * Created by alex on 14/03/16.
  */
-angular.module('pointService', ['ngRoute', 'ngAnimate', 'ngBootbox']);
+angular.module('pointService', ['ngRoute', 'ngAnimate', 'ngBootbox', 'truncate']);
 
 function config ($routeProvider){
     $routeProvider
@@ -34,6 +34,11 @@ function config ($routeProvider){
         .when('/updateServiceById', {
             templateUrl : 'service/addService/addService.view.html',
             controller : 'ctrlUpdateServiceById',
+            controllerAs : 'vm'
+        })
+        .when('/myProfile', {
+            templateUrl : 'myProfile/myProfile.view.html',
+            controller : 'ctrlMyProfile',
             controllerAs : 'vm'
         })
         .otherwise({redirectTo : '/'});
