@@ -15,6 +15,14 @@ function ctrlAddService($location, services, authentication, $ngBootbox){
 
 
     vm.isLoggedIn = authentication.isLoggedIn();
+    vm.logout = function(){
+        authentication.logout();
+        $ngBootbox.alert('vous êtes maintenant déconnecté')
+            .then(function() {
+                $location.path('/registerLogin');
+            });
+
+    };
     vm.textIfNotLogged = "Veuillez vous connecter pour publier un service";
     vm.titrePage = "Création service";
     vm.textButtonSubmit = "Publier";

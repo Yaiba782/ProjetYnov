@@ -1,12 +1,15 @@
 <div class="wrapper clearfix">
     <div>
-        <a href="#" class="menu-link">Menu</a>
+        <a href="#/" class="menu-link">Menu</a>
         <nav role="navigation" class="mobile-menu">
             <ul>
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="rechercher.html">Rechercher</a></li>
-                <li><a href="#">Concept</a></li>
-                <li><a href="#">Connexion / Inscription</a></li>
+                <li><a href="#/">Accueil</a></li>
+                <li><a href="#/getAllServices">Rechercher</a></li>
+                <li><a href="#/addService">ajouter un service</a></li>
+                <li><a ng-hide="!vm.isLoggedIn" href="#/myProfile">Mon profil</a></li>
+
+                <li><a ng-hide="vm.isLoggedIn" href="#/registerLogin">Connexion / Inscription</a></li>
+                <li><a ng-hide="!vm.isLoggedIn" ng-click="vm.logout()">Déconnexion</a></li>
             </ul>
         </nav>
     </div>

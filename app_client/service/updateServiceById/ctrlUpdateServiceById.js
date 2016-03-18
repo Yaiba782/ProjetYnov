@@ -10,6 +10,14 @@ function ctrlUpdateServiceById($location, services, authentication,  $ngBootbox)
     var vm = this;
 
     vm.isLoggedIn = authentication.isLoggedIn();
+    vm.logout = function(){
+        authentication.logout();
+        $ngBootbox.alert('vous êtes maintenant déconnecté')
+            .then(function() {
+                $location.path('/registerLogin');
+            });
+
+    };
     vm.textIfNotLogged = "Veuillez vous connecter pour modifier vos annonces";
     vm.titrePage = "modifier mon service";
     vm.textButtonSubmit = "mdofier";

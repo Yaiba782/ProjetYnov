@@ -1,11 +1,14 @@
 <div class="wrapper clearfix">
-    <a href="#" class="menu-link">Menu</a>
+    <a href="#/" class="menu-link">Menu</a>
     <nav role="navigation" class="mobile-menu">
         <ul>
             <li><a href="#/">Accueil</a></li>
-            <li><a href="#/">Rechercher</a></li>
-            <li><a href="#/">Concept</a></li>
-            <li><a href="#/registerLogin">Connexion / Inscription</a></li>
+            <li><a href="#/getAllServices">Rechercher</a></li>
+            <li><a href="#/addService">ajouter un service</a></li>
+            <li><a ng-hide="!vm.isLoggedIn" href="#/myProfile">Mon profil</a></li>
+
+            <li><a ng-hide="vm.isLoggedIn" href="#/registerLogin">Connexion / Inscription</a></li>
+            <li><a ng-hide="!vm.isLoggedIn" ng-click="vm.logout()">Déconnexion</a></li>
         </ul>
     </nav>
     <navigation-pc content="vm.navigationPc"></navigation-pc>
@@ -15,7 +18,7 @@
         <div ng-if="vm.isLoggedIn">
         <!-- begin .why-attend -->
         <div>
-            <h1 class="titre">{{vm.titrePage}}</h1>
+            <h1 class="titre text-center">{{vm.titrePage}}</h1>
             <form  ng-submit="vm.onSubmitAddService()" name="vm.formAddService"  class="formulaire">
                 <div>
                     <label class="text" for="titre">Titre de l'annonce :<b class="ast">*</b></label>
@@ -74,12 +77,12 @@
                 </div>
                 <div class="section">
                     <label class="text">Nombre de points donnés pour le service :<b class="ast">*</b></label>
-                    <div class="point">
-                        <div class="divalignement">
+
+
                             <input class="points" type="number"
                                    ng-model="vm.addService.pointNumber" required>
-                        </div>
-                    </div>
+
+
                 </div>
                     <div class="section sub_button">
                         <button ng-disabled="!vm.formAddService.$valid" type="submit" class="btn btn-default">

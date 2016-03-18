@@ -8,7 +8,17 @@ angular
 ctrlGetAllServices.$inject = ['$location', 'services', 'authentication', '$ngBootbox'];
 
 function ctrlGetAllServices($location, services, authentication, $ngBootbox ){
+
     var vm = this;
+    vm.isLoggedIn = authentication.isLoggedIn();
+    vm.logout = function(){
+        authentication.logout();
+        $ngBootbox.alert('vous êtes maintenant déconnecté')
+            .then(function() {
+                $location.path('/registerLogin');
+            });
+
+    };
     var currentUser = authentication.currentUser();
     vm.currentCategory = "";
     vm.errorGetAllServices ="";

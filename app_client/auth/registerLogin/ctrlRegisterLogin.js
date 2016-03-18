@@ -8,6 +8,15 @@ ctrlRegisterLogin.$inject = ['$location', 'authentication', 'services', '$ngBoot
 
 function ctrlRegisterLogin($location, authentication, services, $ngBootbox){
     var vm = this;
+    vm.isLoggedIn = authentication.isLoggedIn();
+    vm.logout = function(){
+        authentication.logout();
+        $ngBootbox.alert('vous êtes maintenant déconnecté')
+            .then(function() {
+                $location.path('/registerLogin');
+            });
+
+    };
     vm.formError = [];
 
     vm.login = {

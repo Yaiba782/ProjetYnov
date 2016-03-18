@@ -9,6 +9,15 @@ ctrlMyProfile.$inject = ['$location', 'services', 'authentication', '$ngBootbox'
 
 function ctrlMyProfile($location, services, authentication, $ngBootbox, userService){
     var vm = this;
+    vm.isLoggedIn = authentication.isLoggedIn();
+    vm.logout = function(){
+        authentication.logout();
+        $ngBootbox.alert('vous êtes maintenant déconnecté')
+            .then(function() {
+                $location.path('/registerLogin');
+            });
+
+    };
     vm.formError = [];
     vm.user = {};
     var currentUser = authentication.currentUser();
