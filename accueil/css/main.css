@@ -1809,3 +1809,20 @@ button.btn.btn-info>a {
     color: #fff !important;
     text-transform: inherit;
 }
+
+.code-style {
+    width: 90%;
+    padding-left: 10px; 
+    padding-right: 16%;
+}
+
+.button-style-valid{
+    margin-right:10%; 
+    margin-top: -22% !important;
+}
+
+.button-valid{
+    float: right!important;
+     margin-right: -30%!important;
+     margin-top: -22% !important;
+}
