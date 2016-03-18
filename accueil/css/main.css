@@ -1797,3 +1797,11 @@ form#contact-form input[type="submit"] {
     z-index: 999;
     margin-top: -1%; 
 }
+
+.player-style{
+    padding:10%;
+    padding-top: 1%;
+    padding-bottom: 31%;
+    margin-bottom: -22%;
+}
+}
